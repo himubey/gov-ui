@@ -57,12 +57,12 @@
       ],
       "rows": [
         {
-          "name": "Alex Johnson",
+          "name": "Himanshu Dubey",
           "id": "EMP-001",
           "department": "Engineering"
         },
         {
-          "name": "Sarah Williams",
+          "name": "Meera Iyer",
           "id": "EMP-002",
           "department": "Product"
         }
@@ -82,7 +82,7 @@
       ],
       "rows": [
         {
-          "name": "Alex Johnson",
+          "name": "Himanshu Dubey",
           "status": {
             "component": "status-badge",
             "props": {
@@ -92,7 +92,7 @@
           }
         },
         {
-          "name": "Michael Chen",
+          "name": "Diksha Sharma",
           "status": {
             "component": "status-badge",
             "props": {
@@ -121,7 +121,7 @@
       ],
       "rows": [
         {
-          "name": "Alex Johnson",
+          "name": "Himanshu Dubey",
           "department": "Engineering"
         }
       ]
@@ -137,7 +137,7 @@
       ],
       "rows": [
         {
-          "name": "Alex Johnson"
+          "name": "Himanshu Dubey"
         }
       ]
     },

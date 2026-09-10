@@ -46,39 +46,74 @@ const columns: Column<Employee>[] = [
 
 const employees: Employee[] = [
   {
-    name: "Alex Johnson",
+    name: "Himanshu Dubey",
     id: "EMP-001",
     role: "Software Engineer",
     department: "Engineering",
     status: <StatusBadge status="success">Active</StatusBadge>,
   },
   {
-    name: "Sarah Williams",
+    name: "Meera Iyer",
     id: "EMP-002",
     role: "Product Manager",
     department: "Product",
     status: <StatusBadge status="success">Active</StatusBadge>,
   },
   {
-    name: "Michael Chen",
+    name: "Diksha Sharma",
     id: "EMP-003",
     role: "UX Designer",
     department: "Design",
     status: <StatusBadge status="warning">On leave</StatusBadge>,
   },
   {
-    name: "Jessica Brown",
+    name: "Seema Chauhan",
     id: "EMP-004",
     role: "QA Engineer",
     department: "Engineering",
     status: <StatusBadge status="neutral">Inactive</StatusBadge>,
   },
   {
-    name: "David Miller",
+    name: "Amit Deshmukh",
     id: "EMP-005",
     role: "DevOps Engineer",
     department: "Engineering",
     status: <StatusBadge status="success">Active</StatusBadge>,
+  },
+  {
+    name: "Veer Pratap Singh",
+    id: "EMP-006",
+    role: "Data Analyst",
+    department: "Finance",
+    status: <StatusBadge status="success">Active</StatusBadge>,
+  },
+  {
+    name: "Sumit Verma",
+    id: "EMP-007",
+    role: "Accounts Officer",
+    department: "Finance",
+    status: <StatusBadge status="warning">On leave</StatusBadge>,
+  },
+  {
+    name: "Ramesh Nair",
+    id: "EMP-008",
+    role: "Systems Administrator",
+    department: "Engineering",
+    status: <StatusBadge status="success">Active</StatusBadge>,
+  },
+  {
+    name: "Kanha Tiwari",
+    id: "EMP-009",
+    role: "Records Officer",
+    department: "Administration",
+    status: <StatusBadge status="success">Active</StatusBadge>,
+  },
+  {
+    name: "Rudrashi Joshi",
+    id: "EMP-010",
+    role: "Policy Analyst",
+    department: "Administration",
+    status: <StatusBadge status="neutral">Inactive</StatusBadge>,
   },
 ];
 
@@ -111,6 +146,8 @@ export function EmployeesPage() {
             { value: "engineering", label: "Engineering" },
             { value: "product", label: "Product" },
             { value: "design", label: "Design" },
+            { value: "finance", label: "Finance" },
+            { value: "administration", label: "Administration" },
           ]}
         />
 
