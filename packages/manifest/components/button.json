@@ -1,0 +1,77 @@
+{
+  "name": "button",
+  "element": "button",
+  "classes": {
+    "base": "gov-button",
+    "variant": "gov-button--{variant}",
+    "size": "gov-button--{size}"
+  },
+  "variants": {
+    "variant": [
+      "primary",
+      "secondary",
+      "danger"
+    ],
+    "size": [
+      "sm",
+      "md"
+    ]
+  },
+  "defaults": {
+    "variant": "primary",
+    "size": "md"
+  },
+  "attributes": {
+    "type": "button"
+  },
+  "a11y": {
+    "accessibleName": "Visible text content. An icon-only button requires aria-label.",
+    "keyboard": {
+      "Enter": "Activates the button.",
+      "Space": "Activates the button."
+    },
+    "notes": [
+      "Uses the native button element so browser keyboard behavior and form participation stay predictable.",
+      "type defaults to button, not submit, so a button inside a form does not submit it by accident.",
+      "Disabled buttons leave the tab order. Where the reason for disabling is not obvious, prefer an enabled button that explains the problem on activation."
+    ]
+  },
+  "docs": {
+    "summary": "Use Button for actions.",
+    "whenToUse": [
+      "Performing an action: saving, submitting, deleting, opening a dialog."
+    ],
+    "whenNotToUse": [
+      "Navigating to another page. Use a link, so middle-click, right-click and browser history behave as the user expects."
+    ]
+  },
+  "examples": {
+    "primary": {
+      "children": "Save"
+    },
+    "secondary": {
+      "variant": "secondary",
+      "children": "Cancel"
+    },
+    "danger": {
+      "variant": "danger",
+      "children": "Delete"
+    },
+    "small": {
+      "size": "sm",
+      "children": "Filter"
+    },
+    "disabled": {
+      "attributes": {
+        "disabled": true
+      },
+      "children": "Save"
+    },
+    "submit": {
+      "attributes": {
+        "type": "submit"
+      },
+      "children": "Save"
+    }
+  }
+}

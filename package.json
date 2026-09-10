@@ -1,0 +1,38 @@
+{
+  "name": "gov-ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lightweight UI for government software.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build:css && npm run build:core && npm run build:react && npm run build:docs",
+    "build:css": "node packages/css/build.mjs",
+    "build:core": "node packages/core/build.mjs",
+    "build:react": "tsc -p packages/react/tsconfig.json",
+    "test": "node --test test/*.test.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:conformance": "node scripts/conformance.mjs",
+    "check:budget": "node scripts/check-budget.mjs",
+    "check:deps": "node scripts/check-deps.mjs",
+    "conformance:update": "node scripts/conformance.mjs --update",
+    "verify": "npm run build && npm run check:contrast && npm run check:conformance && npm run check:deps && npm run check:budget && npm run check:examples && npm test",
+    "check:examples": "tsc -p examples/react/tsconfig.json",
+    "build:docs": "node apps/docs/build.mjs"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.9.3"
+  }
+}

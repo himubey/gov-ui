@@ -1,0 +1,26 @@
+{
+  "name": "page",
+  "element": "div",
+  "classes": {
+    "base": "gov-page"
+  },
+  "a11y": {
+    "notes": [
+      "A layout container only. It adds no semantics, because the page's landmarks belong to the application shell."
+    ]
+  },
+  "docs": {
+    "summary": "Constrains page content to a readable width.",
+    "whenToUse": [
+      "Wrapping the main content of a page."
+    ],
+    "whenNotToUse": [
+      "Full-bleed regions such as a header bar."
+    ]
+  },
+  "examples": {
+    "basic": {
+      "children": "Page content"
+    }
+  }
+}

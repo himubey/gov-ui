@@ -1,0 +1,18 @@
+<!--
+  GOV UI golden markup: select
+
+  Generated from packages/manifest/components/select.json
+  by scripts/conformance.mjs. Do not edit by hand.
+
+  This is the markup contract. Every emitter must produce DOM
+  equivalent to what is below.
+-->
+
+<!-- case: basic -->
+<div class="gov-field"><label class="gov-field__label" for="department">Department</label><select class="gov-select" id="department" name="department"><option value="all">All departments</option><option value="engineering">Engineering</option><option value="finance">Finance</option></select></div>
+
+<!-- case: with-value -->
+<div class="gov-field"><label class="gov-field__label" for="department">Department</label><select class="gov-select" id="department" name="department"><option value="all">All departments</option><option value="engineering">Engineering</option><option value="finance" selected>Finance</option></select></div>
+
+<!-- case: with-error -->
+<div class="gov-field gov-field--error"><label class="gov-field__label" for="status">Status</label><p class="gov-field__error" id="status-error"><span class="gov-visually-hidden">Error:</span> Select a status.</p><select class="gov-select gov-select--error" id="status" name="status" aria-describedby="status-error" aria-invalid="true"><option value="">Choose a status</option><option value="active">Active</option></select></div>

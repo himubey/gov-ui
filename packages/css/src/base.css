@@ -1,0 +1,136 @@
+/*
+ * GOV UI — base styles
+ *
+ * A deliberately small reset plus the global behaviors every component
+ * depends on: focus, high contrast, reduced motion.
+ *
+ * Everything here is opt-in at the document level. GOV UI does not
+ * restyle arbitrary elements beyond what a reset needs, because it is
+ * frequently dropped into an existing application that already has
+ * styles of its own.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--gov-background);
+  color: var(--gov-text);
+  font-family: var(--gov-font-sans);
+  font-size: var(--gov-font-size-3);
+  line-height: var(--gov-line-height-body);
+}
+
+/*
+ * Headings use the tight line-height, which is floored at 1.4 so that
+ * Devanagari, Bengali, Tamil and Gurmukhi matras are not clipped.
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  line-height: var(--gov-line-height-tight);
+  font-weight: var(--gov-font-weight-bold);
+}
+
+/*
+ * Focus.
+ *
+ * Two-tone by necessity. A single yellow ring is about 1.1:1 against a
+ * white page, so on its own it fails SC 1.4.11 on light backgrounds; a
+ * single dark ring disappears on dark backgrounds. Painting a yellow
+ * band inside a dark one means whichever surface the ring lands on,
+ * one of its two edges carries the contrast.
+ *
+ * The outline is drawn on top of the box-shadow, so the layers read
+ * outward as: dark, yellow, dark.
+ */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--gov-focus-width) solid var(--gov-focus);
+  outline-offset: var(--gov-focus-offset);
+  box-shadow: 0 0 0
+    calc(var(--gov-focus-offset) + var(--gov-focus-width) * 2)
+    var(--gov-focus-contrast);
+}
+
+/*
+ * Windows High Contrast / forced-colors.
+ *
+ * A meaningful number of government users browse with forced colors on.
+ * Authored colors are discarded there, so the ring is re-expressed with
+ * a system color; box-shadow is not rendered at all in this mode, which
+ * is why the outline has to stand on its own.
+ */
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: var(--gov-focus-width) solid Highlight;
+    outline-offset: var(--gov-focus-offset);
+    box-shadow: none;
+  }
+
+  /* Borders drawn with background-color vanish under forced colors.
+   * Anything structural must use a real border so it survives. */
+  .gov-table,
+  .gov-table th,
+  .gov-table td {
+    border-color: CanvasText;
+  }
+}
+
+/*
+ * Motion.
+ *
+ * Zeroing the duration token is enough, because components read the
+ * token rather than hard-coding durations.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --gov-duration: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Visually hidden, but available to assistive technology.
+ *
+ * Used for skip-link targets, table caption text and status
+ * announcements. Not `display: none`, which removes it from the
+ * accessibility tree entirely.
+ */
+.gov-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * Numeric columns. Tabular figures make digits align down a column,
+ * which is the difference between a scannable ID column and a ragged
+ * one. Applied deliberately, not globally — proportional figures read
+ * better in prose.
+ */
+.gov-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}

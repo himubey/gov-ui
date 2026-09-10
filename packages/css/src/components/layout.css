@@ -1,0 +1,100 @@
+/*
+ * Layout: Page, PageHeader, Toolbar.
+ *
+ * Three containers, no grid system. A utility framework is explicitly
+ * out of scope (CLAUDE.md section 27) — applications use ordinary CSS
+ * for their own layout.
+ */
+
+/* ---------------------------------------------------------------
+ * Page
+ * ------------------------------------------------------------- */
+
+.gov-page {
+  max-width: var(--gov-content-width);
+  margin-inline: auto;
+
+  /* padding-block and padding-inline rather than the shorthand, so a
+   * side gutter is always present at small widths. */
+  padding-block: var(--gov-space-7);
+  padding-inline: var(--gov-space-6);
+}
+
+@media (max-width: 40em) {
+  .gov-page {
+    padding-block: var(--gov-space-5);
+    padding-inline: var(--gov-space-4);
+  }
+}
+
+/* ---------------------------------------------------------------
+ * PageHeader
+ * ------------------------------------------------------------- */
+
+.gov-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gov-space-6);
+  margin-block-end: var(--gov-space-6);
+}
+
+.gov-page-header__content {
+  /* Lets the title wrap instead of forcing the actions off the row. */
+  min-width: 0;
+  flex: 1 1 20rem;
+}
+
+.gov-page-header__title {
+  font-size: var(--gov-font-size-8);
+  line-height: var(--gov-line-height-tight);
+  color: var(--gov-text);
+}
+
+.gov-page-header__description {
+  margin-block: var(--gov-space-2) 0;
+  font-size: var(--gov-font-size-3);
+  color: var(--gov-text-muted);
+}
+
+.gov-page-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gov-space-3);
+}
+
+@media (max-width: 40em) {
+  .gov-page-header__title {
+    font-size: var(--gov-font-size-6);
+  }
+}
+
+/* ---------------------------------------------------------------
+ * Toolbar
+ * ------------------------------------------------------------- */
+
+.gov-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--gov-space-3);
+
+  margin-block-end: var(--gov-space-4);
+  padding: var(--gov-space-4);
+
+  border: var(--gov-border-width) solid var(--gov-border);
+  border-radius: var(--gov-radius-md);
+  background: var(--gov-background);
+}
+
+/*
+ * Fields inside a toolbar drop the bottom margin they carry in a form:
+ * the toolbar's own gap handles spacing, and `align-items: flex-end`
+ * lines the controls up along their baseline regardless of whether each
+ * one has a hint.
+ */
+.gov-toolbar .gov-field {
+  margin-block-end: 0;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@gov-ui/core",
+  "version": "0.0.0",
+  "description": "Framework-free interaction behavior for GOV UI. Zero dependencies.",
+  "license": "MIT",
+  "main": "dist/gov-ui.js",
+  "module": "src/index.js",
+  "files": ["dist", "src"],
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}

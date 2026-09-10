@@ -1,0 +1,13 @@
+{
+  "name": "@gov-ui/manifest",
+  "version": "0.0.0",
+  "description": "Component markup contract for GOV UI. The source of truth every emitter is checked against.",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./components/*": "./components/*"
+  },
+  "files": ["index.mjs", "schema.json", "components"]
+}

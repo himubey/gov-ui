@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GOV UI component manifest",
+  "description": "Declares a component's markup contract. Every emitter is checked against this.",
+  "type": "object",
+  "required": ["name", "element", "classes"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Component name in kebab-case."
+    },
+    "element": {
+      "type": "string",
+      "description": "Default HTML element. Semantic HTML first; ARIA only where the platform offers nothing."
+    },
+    "voidElement": {
+      "type": "boolean",
+      "description": "True for elements with no closing tag, such as input."
+    },
+    "classes": {
+      "type": "object",
+      "required": ["base"],
+      "description": "Class name patterns. {variant} is substituted with the prop value.",
+      "properties": {
+        "base": { "type": "string", "pattern": "^gov-" }
+      },
+      "additionalProperties": { "type": "string" }
+    },
+    "variants": {
+      "type": "object",
+      "description": "Allowed values per variant prop. Keep these finite and semantic.",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "description": "Default value per variant prop.",
+      "additionalProperties": { "type": "string" }
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Attributes always present on the element.",
+      "additionalProperties": { "type": ["string", "boolean"] }
+    },
+    "a11y": {
+      "type": "object",
+      "description": "The accessibility contract. Written before the component is implemented.",
+      "additionalProperties": false,
+      "properties": {
+        "accessibleName": { "type": "string" },
+        "keyboard": {
+          "type": "object",
+          "description": "Key to expected behavior. Every entry needs a test.",
+          "additionalProperties": { "type": "string" }
+        },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "docs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string" },
+        "whenToUse": { "type": "array", "items": { "type": "string" } },
+        "whenNotToUse": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

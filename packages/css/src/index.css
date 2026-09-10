@@ -1,0 +1,8 @@
+/*
+ * Source entry point.
+ *
+ * Consumers use the built dist/gov-ui.css. This file exists for tooling
+ * that prefers @import over the concatenated build.
+ */
+@import "./tokens.css";
+@import "./base.css";

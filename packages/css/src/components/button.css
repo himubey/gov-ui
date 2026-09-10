@@ -1,0 +1,100 @@
+/*
+ * Button
+ *
+ * Three variants and two sizes. Not fifteen: every additional variant is
+ * a decision pushed onto the application author, and the point of a
+ * design system is to make that decision once.
+ */
+
+.gov-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gov-space-2);
+
+  border: var(--gov-border-width) solid transparent;
+  border-radius: var(--gov-radius-sm);
+
+  font: inherit;
+  font-weight: var(--gov-font-weight-bold);
+  line-height: var(--gov-line-height-tight);
+  text-align: center;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+/*
+ * Size lives entirely in the size modifiers, so both classes carry
+ * meaning. Putting the medium values on the base and only overriding for
+ * small leaves `gov-button--md` in every piece of markup while styling
+ * nothing — a class that looks load-bearing and is not.
+ *
+ * Buttons sit next to inputs constantly, so medium tracks the shared
+ * control height and a toolbar lines up.
+ */
+.gov-button--md {
+  min-height: var(--gov-control-height);
+  padding-inline: var(--gov-space-4);
+  font-size: var(--gov-font-size-2);
+}
+
+.gov-button--sm {
+  min-height: calc(var(--gov-control-height) - 8px);
+  padding-inline: var(--gov-space-3);
+  font-size: var(--gov-font-size-1);
+}
+
+.gov-button--primary {
+  background: var(--gov-primary);
+  color: var(--gov-primary-contrast);
+}
+
+.gov-button--primary:hover {
+  background: var(--gov-primary-hover);
+}
+
+/*
+ * Secondary carries a strong border, not the decorative one. It is the
+ * edge of an interactive control, so it needs 3:1 against the page
+ * (WCAG 2.2 SC 1.4.11).
+ */
+.gov-button--secondary {
+  background: var(--gov-background);
+  color: var(--gov-text);
+  border-color: var(--gov-border-strong);
+}
+
+.gov-button--secondary:hover {
+  background: var(--gov-surface-sunken);
+}
+
+.gov-button--danger {
+  background: var(--gov-danger);
+  color: var(--gov-text-inverse);
+}
+
+.gov-button--danger:hover {
+  background: var(--gov-danger-hover);
+}
+
+/*
+ * Disabled is deliberately dimmed rather than greyed to illegibility.
+ * A control the user cannot operate still has to be readable, because
+ * they need to know what they are being denied.
+ */
+.gov-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/*
+ * Under forced colors, authored backgrounds are discarded and every
+ * variant collapses to the same appearance. A border keeps the button
+ * looking like a button.
+ */
+@media (forced-colors: active) {
+  .gov-button {
+    border-color: ButtonBorder;
+  }
+}

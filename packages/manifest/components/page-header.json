@@ -1,0 +1,54 @@
+{
+  "name": "page-header",
+  "element": "header",
+  "classes": {
+    "base": "gov-page-header",
+    "content": "gov-page-header__content",
+    "title": "gov-page-header__title",
+    "description": "gov-page-header__description",
+    "actions": "gov-page-header__actions"
+  },
+  "a11y": {
+    "notes": [
+      "Renders the page's single h1 by default. Two h1 elements, or a skip from h1 to h3, breaks the outline screen reader users navigate by.",
+      "Actions sit outside the heading, so the heading text is exactly the page name."
+    ]
+  },
+  "docs": {
+    "summary": "The title, description and primary actions for a page.",
+    "whenToUse": [
+      "The top of any page."
+    ],
+    "whenNotToUse": [
+      "Section headings within a page. Use a plain heading."
+    ]
+  },
+  "examples": {
+    "basic": {
+      "title": "Employees"
+    },
+    "with-description": {
+      "title": "Employees",
+      "description": "Manage your team members and their roles."
+    },
+    "with-actions": {
+      "title": "Employees",
+      "description": "Manage your team members and their roles.",
+      "children": [
+        {
+          "component": "button",
+          "props": {
+            "variant": "secondary",
+            "children": "Export"
+          }
+        },
+        {
+          "component": "button",
+          "props": {
+            "children": "Add employee"
+          }
+        }
+      ]
+    }
+  }
+}

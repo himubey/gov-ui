@@ -1,0 +1,24 @@
+<!--
+  GOV UI golden markup: table
+
+  Generated from packages/manifest/components/table.json
+  by scripts/conformance.mjs. Do not edit by hand.
+
+  This is the markup contract. Every emitter must produce DOM
+  equivalent to what is below.
+-->
+
+<!-- case: basic -->
+<div class="gov-table-wrapper" tabindex="0" role="region" aria-label="Employees"><table class="gov-table"><caption class="gov-table__caption gov-visually-hidden">Employees</caption><thead class="gov-table__head"><tr><th scope="col" class="gov-table__header">Employee</th><th scope="col" class="gov-table__header gov-table__header--numeric">ID</th><th scope="col" class="gov-table__header">Department</th></tr></thead><tbody class="gov-table__body"><tr class="gov-table__row"><td class="gov-table__cell">Himanshu Dubey</td><td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-001</td><td class="gov-table__cell">Engineering</td></tr><tr class="gov-table__row"><td class="gov-table__cell">Meera Iyer</td><td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-002</td><td class="gov-table__cell">Product</td></tr></tbody></table></div>
+
+<!-- case: with-status -->
+<div class="gov-table-wrapper" tabindex="0" role="region" aria-label="Employees"><table class="gov-table"><caption class="gov-table__caption gov-visually-hidden">Employees</caption><thead class="gov-table__head"><tr><th scope="col" class="gov-table__header">Employee</th><th scope="col" class="gov-table__header">Status</th></tr></thead><tbody class="gov-table__body"><tr class="gov-table__row"><td class="gov-table__cell">Himanshu Dubey</td><td class="gov-table__cell"><span class="gov-status gov-status--success">Active</span></td></tr><tr class="gov-table__row"><td class="gov-table__cell">Diksha Sharma</td><td class="gov-table__cell"><span class="gov-status gov-status--warning">On leave</span></td></tr></tbody></table></div>
+
+<!-- case: sortable -->
+<div class="gov-table-wrapper" tabindex="0" role="region" aria-label="Employees"><table class="gov-table"><caption class="gov-table__caption gov-visually-hidden">Employees</caption><thead class="gov-table__head"><tr><th scope="col" class="gov-table__header" aria-sort="ascending"><a class="gov-table__sort" href="?sort=name&amp;dir=desc">Employee</a></th><th scope="col" class="gov-table__header" aria-sort="none"><a class="gov-table__sort" href="?sort=department">Department</a></th></tr></thead><tbody class="gov-table__body"><tr class="gov-table__row"><td class="gov-table__cell">Himanshu Dubey</td><td class="gov-table__cell">Engineering</td></tr></tbody></table></div>
+
+<!-- case: visible-caption -->
+<div class="gov-table-wrapper" tabindex="0" role="region" aria-label="Employees"><table class="gov-table"><caption class="gov-table__caption">Employees</caption><thead class="gov-table__head"><tr><th scope="col" class="gov-table__header">Employee</th></tr></thead><tbody class="gov-table__body"><tr class="gov-table__row"><td class="gov-table__cell">Himanshu Dubey</td></tr></tbody></table></div>
+
+<!-- case: empty -->
+<div class="gov-table-wrapper" tabindex="0" role="region" aria-label="Employees"><table class="gov-table"><caption class="gov-table__caption gov-visually-hidden">Employees</caption><thead class="gov-table__head"><tr><th scope="col" class="gov-table__header">Employee</th></tr></thead><tbody class="gov-table__body"></tbody></table></div>

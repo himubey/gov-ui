@@ -1,0 +1,66 @@
+{
+  "name": "input",
+  "element": "input",
+  "voidElement": true,
+  "classes": {
+    "wrapper": "gov-field",
+    "wrapperInvalid": "gov-field--error",
+    "label": "gov-field__label",
+    "hint": "gov-field__hint",
+    "error": "gov-field__error",
+    "base": "gov-input",
+    "invalid": "gov-input--error"
+  },
+  "a11y": {
+    "accessibleName": "The associated label. Placeholder text is never a substitute.",
+    "keyboard": {
+      "Tab": "Moves focus to the control."
+    },
+    "notes": [
+      "label/for, hint and error ids are derived from the field name so they always agree.",
+      "The error message renders above the control: a screen reader reaches it before editing, and a mobile keyboard cannot cover it.",
+      "aria-invalid is set only when there is an error. Present-and-false on every field is noise.",
+      "The error text carries a visually hidden 'Error:' prefix, so meaning does not rest on the red styling."
+    ]
+  },
+  "docs": {
+    "summary": "A labelled text input with hint and error support.",
+    "whenToUse": [
+      "Collecting a single line of text."
+    ],
+    "whenNotToUse": [
+      "Dates. Use DateInput's three fields.",
+      "Choosing from a fixed list. Use Select."
+    ]
+  },
+  "examples": {
+    "basic": {
+      "name": "employeeName",
+      "label": "Employee name"
+    },
+    "with-hint": {
+      "name": "employeeName",
+      "label": "Employee name",
+      "hint": "Enter their legal name."
+    },
+    "with-error": {
+      "name": "workEmail",
+      "label": "Work email",
+      "hint": "We only use this for payroll.",
+      "error": "Enter a valid work email address.",
+      "type": "email"
+    },
+    "search": {
+      "name": "search",
+      "label": "Search employees",
+      "type": "search",
+      "placeholder": "Search employees"
+    },
+    "disabled": {
+      "name": "employeeId",
+      "label": "Employee ID",
+      "value": "EMP-001",
+      "disabled": true
+    }
+  }
+}

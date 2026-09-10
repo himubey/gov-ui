@@ -1,0 +1,101 @@
+/*
+ * Field: label, hint, error and control.
+ *
+ * Input and Select share this, because the wiring is the part that
+ * matters and it is identical for both.
+ */
+
+.gov-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gov-space-1);
+  margin-block-end: var(--gov-space-4);
+}
+
+.gov-field__label {
+  font-size: var(--gov-font-size-2);
+  font-weight: var(--gov-font-weight-bold);
+  line-height: var(--gov-line-height-tight);
+  color: var(--gov-text);
+}
+
+.gov-field__hint {
+  margin: 0;
+  font-size: var(--gov-font-size-2);
+  line-height: var(--gov-line-height-tight);
+  color: var(--gov-text-muted);
+}
+
+.gov-field__error {
+  margin: 0;
+  font-size: var(--gov-font-size-2);
+  font-weight: var(--gov-font-weight-bold);
+  line-height: var(--gov-line-height-tight);
+  color: var(--gov-danger-text);
+}
+
+/*
+ * A red bar on the inline-start edge of the whole field.
+ *
+ * Logical property, so it moves to the right edge under RTL without a
+ * second rule. It also means the error is visible when scanning a long
+ * form, rather than only at the moment of reading the message.
+ */
+.gov-field--error {
+  padding-inline-start: var(--gov-space-3);
+  border-inline-start: 4px solid var(--gov-danger);
+}
+
+.gov-input,
+.gov-select {
+  min-height: var(--gov-control-height);
+  padding: var(--gov-space-2) var(--gov-space-3);
+
+  /* The strong border: this is a control edge, which needs 3:1 against
+   * the page. The decorative --gov-border would fail SC 1.4.11 here. */
+  border: var(--gov-border-width) solid var(--gov-border-strong);
+  border-radius: var(--gov-radius-sm);
+
+  background: var(--gov-background);
+  color: var(--gov-text);
+
+  font: inherit;
+  font-size: var(--gov-font-size-3);
+  line-height: var(--gov-line-height-tight);
+
+  /* Without this, a long input overflows its grid or flex parent
+   * instead of shrinking. */
+  min-width: 0;
+  max-width: 100%;
+}
+
+/*
+ * The error state thickens the border rather than only recoloring it,
+ * so the state survives forced-colors mode and is not carried by color
+ * alone.
+ */
+.gov-input--error,
+.gov-select--error {
+  border-width: 2px;
+  border-color: var(--gov-danger);
+}
+
+.gov-input:disabled,
+.gov-select:disabled {
+  background: var(--gov-surface-sunken);
+  color: var(--gov-text-muted);
+  cursor: not-allowed;
+}
+
+.gov-input[readonly] {
+  background: var(--gov-surface);
+}
+
+/*
+ * Keep the native select arrow. Replacing it with a background image
+ * means maintaining an icon that ignores the user's color scheme and
+ * disappears under forced colors — for no functional gain.
+ */
+.gov-select {
+  padding-inline-end: var(--gov-space-2);
+}

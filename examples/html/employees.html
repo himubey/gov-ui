@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Employees — EMS Portal</title>
+
+  <!--
+    Two tags. No bundler, no package manager, no build step.
+
+    This is the path a Razor page, a Django template or a WordPress theme
+    takes, and it is the primary way GOV UI is consumed. If this file
+    stops working, the claim that the system is framework-independent has
+    stopped being true.
+
+    gov-ui.js is not needed by anything on this page: every v0.1
+    component is plain semantic HTML. It is included to show the shape of
+    a real installation.
+  -->
+  <link rel="stylesheet" href="../../packages/css/dist/gov-ui.css">
+  <script src="../../packages/core/dist/gov-ui.js" defer></script>
+</head>
+
+<body>
+  <!--
+    Reproduces the Employees screen from the reference designs using only
+    GOV UI classes. There is deliberately no <style> block and no custom
+    class anywhere in this file: anything that needed one would be a gap
+    in the design system, not a gap in the page.
+
+    The reference design also has a sidebar. Sidebar is not part of the
+    v0.1 component set, so the page covers the main content region only.
+  -->
+  <div class="gov-page">
+
+    <nav class="gov-breadcrumb" aria-label="Breadcrumb">
+      <ol class="gov-breadcrumb__list">
+        <li class="gov-breadcrumb__item">
+          <a class="gov-breadcrumb__link" href="/">EMS Portal</a>
+        </li>
+        <li class="gov-breadcrumb__item">
+          <span class="gov-breadcrumb__current" aria-current="page">Employees</span>
+        </li>
+      </ol>
+    </nav>
+
+    <header class="gov-page-header">
+      <div class="gov-page-header__content">
+        <h1 class="gov-page-header__title">Employees</h1>
+        <p class="gov-page-header__description">Manage your team members and their roles.</p>
+      </div>
+      <div class="gov-page-header__actions">
+        <button class="gov-button gov-button--secondary gov-button--md" type="button">Export</button>
+        <button class="gov-button gov-button--primary gov-button--md" type="button">Add employee</button>
+      </div>
+    </header>
+
+    <!--
+      A real form with a real submit button, so filtering works with
+      JavaScript disabled. The button is not hidden when scripting is
+      available; a visible Apply filters control is also how a keyboard
+      user commits a filter without guessing.
+    -->
+    <form class="gov-toolbar" method="get" action="">
+      <div class="gov-field">
+        <label class="gov-field__label" for="search">Search employees</label>
+        <input class="gov-input" id="search" name="search" type="search" placeholder="Search employees">
+      </div>
+
+      <div class="gov-field">
+        <label class="gov-field__label" for="department">Department</label>
+        <select class="gov-select" id="department" name="department">
+          <option value="all">All departments</option>
+          <option value="engineering">Engineering</option>
+          <option value="product">Product</option>
+          <option value="design">Design</option>
+          <option value="finance">Finance</option>
+          <option value="administration">Administration</option>
+        </select>
+      </div>
+
+      <div class="gov-field">
+        <label class="gov-field__label" for="status">Status</label>
+        <select class="gov-select" id="status" name="status">
+          <option value="all">All statuses</option>
+          <option value="active">Active</option>
+          <option value="on-leave">On leave</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+
+      <button class="gov-button gov-button--secondary gov-button--md" type="submit">Apply filters</button>
+    </form>
+
+    <div class="gov-table-wrapper" tabindex="0" role="region" aria-label="Employees">
+      <table class="gov-table">
+        <caption class="gov-table__caption gov-visually-hidden">Employees</caption>
+
+        <thead class="gov-table__head">
+          <tr>
+            <!-- aria-sort carries the state; the arrow is decoration. -->
+            <th scope="col" class="gov-table__header" aria-sort="ascending">
+              <a class="gov-table__sort" href="?sort=name&amp;dir=desc">Employee</a>
+            </th>
+            <th scope="col" class="gov-table__header gov-table__header--numeric">ID</th>
+            <th scope="col" class="gov-table__header">Role</th>
+            <th scope="col" class="gov-table__header">Department</th>
+            <th scope="col" class="gov-table__header">Status</th>
+          </tr>
+        </thead>
+
+        <tbody class="gov-table__body">
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Himanshu Dubey</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-001</td>
+            <td class="gov-table__cell">Software Engineer</td>
+            <td class="gov-table__cell">Engineering</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--success">Active</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Meera Iyer</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-002</td>
+            <td class="gov-table__cell">Product Manager</td>
+            <td class="gov-table__cell">Product</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--success">Active</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Diksha Sharma</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-003</td>
+            <td class="gov-table__cell">UX Designer</td>
+            <td class="gov-table__cell">Design</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--warning">On leave</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Seema Chauhan</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-004</td>
+            <td class="gov-table__cell">QA Engineer</td>
+            <td class="gov-table__cell">Engineering</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--neutral">Inactive</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Amit Deshmukh</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-005</td>
+            <td class="gov-table__cell">DevOps Engineer</td>
+            <td class="gov-table__cell">Engineering</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--success">Active</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Veer Pratap Singh</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-006</td>
+            <td class="gov-table__cell">Data Analyst</td>
+            <td class="gov-table__cell">Finance</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--success">Active</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Sumit Verma</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-007</td>
+            <td class="gov-table__cell">Accounts Officer</td>
+            <td class="gov-table__cell">Finance</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--warning">On leave</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Ramesh Nair</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-008</td>
+            <td class="gov-table__cell">Systems Administrator</td>
+            <td class="gov-table__cell">Engineering</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--success">Active</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Kanha Tiwari</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-009</td>
+            <td class="gov-table__cell">Records Officer</td>
+            <td class="gov-table__cell">Administration</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--success">Active</span></td>
+          </tr>
+          <tr class="gov-table__row">
+            <td class="gov-table__cell">Rudrashi Joshi</td>
+            <td class="gov-table__cell gov-table__cell--numeric gov-tabular">EMP-010</td>
+            <td class="gov-table__cell">Policy Analyst</td>
+            <td class="gov-table__cell">Administration</td>
+            <td class="gov-table__cell"><span class="gov-status gov-status--neutral">Inactive</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <nav class="gov-pagination" aria-label="Pagination">
+      <ol class="gov-pagination__list">
+        <li class="gov-pagination__item">
+          <a class="gov-pagination__link gov-pagination__link--current" href="?page=1" aria-current="page">
+            <span class="gov-visually-hidden">Page </span>1
+          </a>
+        </li>
+        <li class="gov-pagination__item">
+          <a class="gov-pagination__link" href="?page=2">
+            <span class="gov-visually-hidden">Page </span>2
+          </a>
+        </li>
+        <li class="gov-pagination__item">
+          <a class="gov-pagination__link" href="?page=3">
+            <span class="gov-visually-hidden">Page </span>3
+          </a>
+        </li>
+      </ol>
+      <a class="gov-pagination__link gov-pagination__link--next" href="?page=2" rel="next">Next</a>
+    </nav>
+
+  </div>
+</body>
+</html>

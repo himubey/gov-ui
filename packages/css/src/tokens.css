@@ -1,0 +1,191 @@
+/*
+ * GOV UI — design tokens
+ *
+ * Tokens are the contract between the visual system and the components.
+ * Components consume these variables; they never repeat raw values.
+ *
+ * A department themes GOV UI by overriding variables here, not by editing
+ * component CSS. See docs/design-principles.md.
+ */
+
+:root {
+  /* ---------------------------------------------------------------
+   * Color — primary
+   * ------------------------------------------------------------- */
+
+  --gov-primary: #0b2a55;
+  --gov-primary-hover: #071d3d;
+  --gov-primary-contrast: #ffffff;
+
+  /* ---------------------------------------------------------------
+   * Color — surfaces and text
+   * ------------------------------------------------------------- */
+
+  --gov-background: #ffffff;
+  --gov-surface: #f8fafc;
+  --gov-surface-sunken: #eef2f7;
+
+  --gov-text: #111827;
+  --gov-text-muted: #56616f;
+  --gov-text-inverse: #ffffff;
+
+  /* Two border tokens, because they have different jobs.
+   *
+   * --gov-border is decoration: table rules, dividers, card edges. It may
+   * be light, because nothing depends on seeing it precisely.
+   *
+   * --gov-border-strong is the edge of an interactive control — an input,
+   * a secondary button. WCAG 2.2 requires 3:1 against the adjacent
+   * background for those (1.4.11 Non-text Contrast), and the decorative
+   * value does not come close. Using one token for both is the most
+   * common way a design system quietly fails this criterion. */
+  --gov-border: #d7dee8;
+  --gov-border-strong: #6b7785;
+
+  /* ---------------------------------------------------------------
+   * Color — focus
+   *
+   * Deliberately NOT derived from --gov-primary: a navy ring on a navy
+   * button is invisible.
+   *
+   * Yellow alone is not enough either — #ffdd00 on white is about 1.1:1,
+   * so a plain yellow ring fails against light backgrounds. The ring is
+   * therefore two-tone: a yellow band sandwiched in a dark one, so
+   * whatever the ring sits on, an adjacent edge carries the contrast.
+   * See the :focus-visible rule in base.css.
+   * ------------------------------------------------------------- */
+
+  --gov-focus: #ffdd00;
+  --gov-focus-contrast: #0b0c0c;
+  --gov-focus-width: 3px;
+  --gov-focus-offset: 2px;
+
+  /* ---------------------------------------------------------------
+   * Color — status
+   *
+   * Each status is a tinted surface with dark text, not a saturated fill
+   * with white text. The reference screens use solid amber with white
+   * text, which does not reach 4.5:1.
+   *
+   * Status must never be carried by color alone (WCAG 1.4.1) — the
+   * component pairs these with a text label.
+   * ------------------------------------------------------------- */
+
+  --gov-success: #15803d;
+  --gov-success-surface: #e3f2e7;
+  --gov-success-text: #14532d;
+
+  --gov-warning: #b45309;
+  --gov-warning-surface: #fbeedb;
+  --gov-warning-text: #703c04;
+
+  --gov-danger: #b91c1c;
+  --gov-danger-hover: #911616;
+  --gov-danger-surface: #fbe6e6;
+  --gov-danger-text: #8f1414;
+
+  --gov-info: #0369a1;
+  --gov-info-surface: #e2eff7;
+  --gov-info-text: #0b4a6f;
+
+  --gov-neutral-surface: #eef1f5;
+  --gov-neutral-text: #33404f;
+
+  /* ---------------------------------------------------------------
+   * Typography
+   *
+   * System stack first, so nothing is downloaded. Government networks are
+   * frequently locked down or offline, and the target device is a low-end
+   * phone on a slow connection — not a laptop. Indic faces follow as
+   * local fallbacks rather than as a webfont.
+   * ------------------------------------------------------------- */
+
+  --gov-font-sans:
+    system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif,
+    "Noto Sans", "Noto Sans Devanagari", "Noto Sans Bengali",
+    "Noto Sans Tamil";
+
+  /* Tabular figures for IDs, dates and amounts, so digits align down a
+   * column. Applied by the table and any numeric cell — not globally,
+   * because proportional figures read better in prose. */
+  --gov-font-tabular: "Menlo", "Consolas", ui-monospace, monospace;
+
+  --gov-font-size-1: 12px;
+  --gov-font-size-2: 14px;
+  --gov-font-size-3: 16px;
+  --gov-font-size-4: 18px;
+  --gov-font-size-5: 20px;
+  --gov-font-size-6: 24px;
+  --gov-font-size-7: 28px;
+  --gov-font-size-8: 32px;
+  --gov-font-size-9: 40px;
+  --gov-font-size-10: 48px;
+
+  --gov-font-weight-normal: 400;
+  --gov-font-weight-medium: 500;
+  --gov-font-weight-bold: 600;
+
+  /* A floor, not a preference. Devanagari matras sit above and below the
+   * baseline and clip at the ~1.2 heading line-height most design systems
+   * use. Bengali, Tamil and Gurmukhi behave the same way. Costs nothing
+   * now; breaks every heading if retrofitted later. */
+  --gov-line-height-tight: 1.4;
+  --gov-line-height-body: 1.6;
+
+  /* ---------------------------------------------------------------
+   * Spacing — numeric steps, not t-shirt sizes
+   * ------------------------------------------------------------- */
+
+  --gov-space-1: 4px;
+  --gov-space-2: 8px;
+  --gov-space-3: 12px;
+  --gov-space-4: 16px;
+  --gov-space-5: 20px;
+  --gov-space-6: 24px;
+  --gov-space-7: 32px;
+  --gov-space-8: 40px;
+  --gov-space-9: 48px;
+
+  /* ---------------------------------------------------------------
+   * Shape — small radii. GOV UI is border-driven, not card-driven.
+   * ------------------------------------------------------------- */
+
+  --gov-radius-sm: 3px;
+  --gov-radius-md: 5px;
+  --gov-border-width: 1px;
+
+  /* ---------------------------------------------------------------
+   * Density
+   *
+   * Administrative software is read all day. Density is a mode set once
+   * on a container, never a prop on a component.
+   * ------------------------------------------------------------- */
+
+  --gov-control-height: 40px;
+  --gov-table-row-padding-block: var(--gov-space-3);
+
+  /* ---------------------------------------------------------------
+   * Layout
+   * ------------------------------------------------------------- */
+
+  --gov-content-width: 1280px;
+
+  /* ---------------------------------------------------------------
+   * Motion — only where it communicates state. Overridden to 0 under
+   * prefers-reduced-motion in base.css.
+   * ------------------------------------------------------------- */
+
+  --gov-duration: 120ms;
+  --gov-easing: ease-out;
+}
+
+/*
+ * Compact density.
+ *
+ * The reference screens spend ~90px of row height on a single line of
+ * text. A caseworker working a long queue wants closer to 40.
+ */
+[data-gov-density="compact"] {
+  --gov-control-height: 32px;
+  --gov-table-row-padding-block: var(--gov-space-2);
+}
