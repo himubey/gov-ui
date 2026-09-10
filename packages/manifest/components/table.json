@@ -1,0 +1,155 @@
+{
+  "name": "table",
+  "element": "table",
+  "classes": {
+    "base": "gov-table",
+    "wrapper": "gov-table-wrapper",
+    "head": "gov-table__head",
+    "body": "gov-table__body",
+    "row": "gov-table__row",
+    "header": "gov-table__header",
+    "cell": "gov-table__cell",
+    "headerNumeric": "gov-table__header--numeric",
+    "cellNumeric": "gov-table__cell--numeric",
+    "caption": "gov-table__caption",
+    "sort": "gov-table__sort"
+  },
+  "a11y": {
+    "accessibleName": "The caption, which is visually hidden by default.",
+    "keyboard": {
+      "Tab": "Moves focus to the scroll container when the table overflows."
+    },
+    "notes": [
+      "Every header carries scope='col', without which a cell read in isolation has no header association.",
+      "A caption is required: a screen reader user landing on the table needs to know what it is a table of.",
+      "The scroll container is focusable and labelled. A horizontally scrolling region that nothing can focus is unreachable by keyboard \u2014 a real WCAG 2.2 failure, invisible on desktop and obvious on a phone.",
+      "Sort state is announced through aria-sort, and the control is a link, so sorting works without JavaScript.",
+      "Numeric columns use tabular figures so digits align down the column."
+    ]
+  },
+  "docs": {
+    "summary": "Displays records in rows and columns.",
+    "whenToUse": [
+      "Records with several comparable fields: employees, cases, permits."
+    ],
+    "whenNotToUse": [
+      "Layout. Use CSS grid.",
+      "A single record. Use a description list."
+    ]
+  },
+  "examples": {
+    "basic": {
+      "caption": "Employees",
+      "columns": [
+        {
+          "key": "name",
+          "header": "Employee"
+        },
+        {
+          "key": "id",
+          "header": "ID",
+          "numeric": true
+        },
+        {
+          "key": "department",
+          "header": "Department"
+        }
+      ],
+      "rows": [
+        {
+          "name": "Alex Johnson",
+          "id": "EMP-001",
+          "department": "Engineering"
+        },
+        {
+          "name": "Sarah Williams",
+          "id": "EMP-002",
+          "department": "Product"
+        }
+      ]
+    },
+    "with-status": {
+      "caption": "Employees",
+      "columns": [
+        {
+          "key": "name",
+          "header": "Employee"
+        },
+        {
+          "key": "status",
+          "header": "Status"
+        }
+      ],
+      "rows": [
+        {
+          "name": "Alex Johnson",
+          "status": {
+            "component": "status-badge",
+            "props": {
+              "status": "success",
+              "children": "Active"
+            }
+          }
+        },
+        {
+          "name": "Michael Chen",
+          "status": {
+            "component": "status-badge",
+            "props": {
+              "status": "warning",
+              "children": "On leave"
+            }
+          }
+        }
+      ]
+    },
+    "sortable": {
+      "caption": "Employees",
+      "columns": [
+        {
+          "key": "name",
+          "header": "Employee",
+          "sort": "ascending",
+          "sortHref": "?sort=name&dir=desc"
+        },
+        {
+          "key": "department",
+          "header": "Department",
+          "sort": "none",
+          "sortHref": "?sort=department"
+        }
+      ],
+      "rows": [
+        {
+          "name": "Alex Johnson",
+          "department": "Engineering"
+        }
+      ]
+    },
+    "visible-caption": {
+      "caption": "Employees",
+      "captionVisible": true,
+      "columns": [
+        {
+          "key": "name",
+          "header": "Employee"
+        }
+      ],
+      "rows": [
+        {
+          "name": "Alex Johnson"
+        }
+      ]
+    },
+    "empty": {
+      "caption": "Employees",
+      "columns": [
+        {
+          "key": "name",
+          "header": "Employee"
+        }
+      ],
+      "rows": []
+    }
+  }
+}

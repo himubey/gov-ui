@@ -1,0 +1,133 @@
+/*
+ * Breadcrumb and Pagination.
+ *
+ * Both are lists of links; both use logical properties throughout so
+ * they mirror correctly under RTL without a second set of rules.
+ */
+
+/* ---------------------------------------------------------------
+ * Breadcrumb
+ * ------------------------------------------------------------- */
+
+.gov-breadcrumb {
+  margin-block-end: var(--gov-space-4);
+  font-size: var(--gov-font-size-2);
+}
+
+.gov-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gov-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gov-breadcrumb__item {
+  display: flex;
+  align-items: center;
+  gap: var(--gov-space-2);
+}
+
+/*
+ * The separator is generated content on the item, not a character in the
+ * markup, so it is never read aloud as "slash" between every level.
+ *
+ * `/` in the content string and a logical margin mean the chevron does
+ * not need reversing under RTL.
+ */
+.gov-breadcrumb__item + .gov-breadcrumb__item::before {
+  content: "/";
+  color: var(--gov-text-muted);
+}
+
+.gov-breadcrumb__link {
+  color: var(--gov-primary);
+  text-decoration: underline;
+}
+
+.gov-breadcrumb__link:hover {
+  text-decoration: none;
+}
+
+.gov-breadcrumb__current {
+  color: var(--gov-text-muted);
+}
+
+/* ---------------------------------------------------------------
+ * Pagination
+ * ------------------------------------------------------------- */
+
+.gov-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gov-space-2);
+  margin-block-start: var(--gov-space-4);
+  font-size: var(--gov-font-size-2);
+}
+
+.gov-pagination__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gov-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * A 40px minimum on both axes. Pagination links are among the smallest
+ * targets in an admin interface and among the most-tapped on a phone;
+ * WCAG 2.2 SC 2.5.8 asks for 24px, and this is comfortably past it.
+ */
+.gov-pagination__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: var(--gov-control-height);
+  min-height: var(--gov-control-height);
+  padding-inline: var(--gov-space-3);
+
+  border: var(--gov-border-width) solid transparent;
+  border-radius: var(--gov-radius-sm);
+
+  color: var(--gov-primary);
+  text-decoration: underline;
+}
+
+.gov-pagination__link:hover {
+  background: var(--gov-surface-sunken);
+  text-decoration: none;
+}
+
+/*
+ * The current page is filled, and it is also the only item carrying
+ * aria-current, so the state is available whether or not color is
+ * perceived.
+ */
+.gov-pagination__link--current {
+  background: var(--gov-primary);
+  color: var(--gov-primary-contrast);
+  font-weight: var(--gov-font-weight-bold);
+  text-decoration: none;
+}
+
+.gov-pagination__link--current:hover {
+  background: var(--gov-primary-hover);
+  color: var(--gov-primary-contrast);
+}
+
+.gov-pagination__link--previous,
+.gov-pagination__link--next {
+  font-weight: var(--gov-font-weight-bold);
+}
+
+@media (forced-colors: active) {
+  .gov-pagination__link--current {
+    border-color: CanvasText;
+  }
+}

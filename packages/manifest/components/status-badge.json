@@ -1,0 +1,58 @@
+{
+  "name": "status-badge",
+  "element": "span",
+  "classes": {
+    "base": "gov-status",
+    "status": "gov-status--{status}"
+  },
+  "variants": {
+    "status": [
+      "success",
+      "warning",
+      "danger",
+      "info",
+      "neutral"
+    ]
+  },
+  "defaults": {
+    "status": "neutral"
+  },
+  "a11y": {
+    "accessibleName": "The visible text label, which is required.",
+    "notes": [
+      "Status is never conveyed by color alone (WCAG 1.4.1). The text label is the status; the color reinforces it.",
+      "Tinted surface with dark text rather than a saturated fill with white text, which does not reach 4.5:1 for amber."
+    ]
+  },
+  "docs": {
+    "summary": "A semantic status label.",
+    "whenToUse": [
+      "Showing the state of a record: active, pending, rejected."
+    ],
+    "whenNotToUse": [
+      "Decoration or counts. Use a plain badge."
+    ]
+  },
+  "examples": {
+    "active": {
+      "status": "success",
+      "children": "Active"
+    },
+    "on-leave": {
+      "status": "warning",
+      "children": "On leave"
+    },
+    "rejected": {
+      "status": "danger",
+      "children": "Rejected"
+    },
+    "under-review": {
+      "status": "info",
+      "children": "Under review"
+    },
+    "inactive": {
+      "status": "neutral",
+      "children": "Inactive"
+    }
+  }
+}

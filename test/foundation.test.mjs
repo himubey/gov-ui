@@ -16,6 +16,7 @@ import { readFileSync } from "node:fs";
 import { run as runContrast, contrast, readTokens } from "../scripts/check-contrast.mjs";
 import {
   loadManifests,
+  createRenderer,
   renderToHtml,
   resolveClasses,
   normalizeHtml,
@@ -23,7 +24,7 @@ import {
   escapeHtml,
   validateManifest,
 } from "../packages/manifest/index.mjs";
-import { checkEmitter, casesFor, readGolden } from "../scripts/conformance.mjs";
+import { checkEmitter, casesFor, readGolden, uncoveredVariants } from "../scripts/conformance.mjs";
 
 describe("color tokens", () => {
   test("every declared pair meets its WCAG minimum", () => {
@@ -181,17 +182,26 @@ describe("conformance harness", () => {
   });
 
   test("the reference renderer matches the goldens on disk", () => {
-    const result = checkEmitter(
-      "reference",
-      (name, props) => renderToHtml(manifests[name], props),
-      manifests,
-    );
+    const result = checkEmitter("reference", createRenderer(manifests), manifests);
     assert.equal(result.failures.length, 0, JSON.stringify(result.failures, null, 2));
   });
 
-  test("cases cover every variant combination plus defaults", () => {
-    // button: 3 variants x 2 sizes, plus the defaults-only case.
-    assert.equal(casesFor(manifests.button).length, 7);
+  test("cases come from the manifest's declared examples", () => {
+    const cases = casesFor(manifests.button).map((c) => c.name);
+    assert.deepEqual(cases, Object.keys(manifests.button.examples));
+  });
+
+  test("every declared variant value is covered by an example", () => {
+    const missing = Object.values(manifests).flatMap(uncoveredVariants);
+    assert.deepEqual(missing, []);
+  });
+
+  test("every component declares at least one example", () => {
+    // validateManifest enforces this at load time; asserting it here
+    // means the rule is visible where the cases are defined.
+    for (const [name, manifest] of Object.entries(manifests)) {
+      assert.ok(Object.keys(manifest.examples).length > 0, name + " has no examples");
+    }
   });
 
   /*
@@ -202,7 +212,7 @@ describe("conformance harness", () => {
   test("catches an emitter that drops a class", () => {
     const result = checkEmitter(
       "broken-classes",
-      (name, props) => renderToHtml(manifests[name], props).replace(" gov-button--md", ""),
+      (name, props) => createRenderer(manifests)(name, props).replace(" gov-button--md", ""),
       manifests,
     );
     assert.ok(result.failures.length > 0, "a dropped class must fail conformance");
@@ -212,7 +222,7 @@ describe("conformance harness", () => {
   test("catches an emitter that uses the wrong element", () => {
     const result = checkEmitter(
       "broken-element",
-      (name, props) => renderToHtml(manifests[name], props).replace(/button>/g, "div>"),
+      (name, props) => createRenderer(manifests)(name, props).replace(/<table/g, "<div"),
       manifests,
     );
     assert.ok(result.failures.length > 0, "a wrong element must fail conformance");

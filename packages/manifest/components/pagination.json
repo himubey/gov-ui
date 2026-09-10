@@ -1,0 +1,54 @@
+{
+  "name": "pagination",
+  "element": "nav",
+  "classes": {
+    "base": "gov-pagination",
+    "list": "gov-pagination__list",
+    "item": "gov-pagination__item",
+    "link": "gov-pagination__link",
+    "linkCurrent": "gov-pagination__link--current",
+    "linkPrevious": "gov-pagination__link--previous",
+    "linkNext": "gov-pagination__link--next"
+  },
+  "attributes": {
+    "aria-label": "Pagination"
+  },
+  "a11y": {
+    "accessibleName": "The nav landmark label, 'Pagination' by default.",
+    "keyboard": {
+      "Tab": "Moves through the page links in order."
+    },
+    "notes": [
+      "Real links, so pagination works with no JavaScript and pages are shareable and bookmarkable.",
+      "Each number carries a visually hidden 'Page' prefix, so it announces as 'Page 2' rather than '2'.",
+      "Previous and Next are omitted at the ends rather than rendered disabled."
+    ]
+  },
+  "docs": {
+    "summary": "Navigates between pages of results.",
+    "whenToUse": [
+      "A result set split across pages."
+    ],
+    "whenNotToUse": [
+      "Fewer results than one page holds."
+    ]
+  },
+  "examples": {
+    "first-page": {
+      "current": 1,
+      "total": 3
+    },
+    "middle-page": {
+      "current": 2,
+      "total": 3
+    },
+    "last-page": {
+      "current": 3,
+      "total": 3
+    },
+    "single-page": {
+      "current": 1,
+      "total": 1
+    }
+  }
+}

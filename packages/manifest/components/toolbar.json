@@ -1,0 +1,53 @@
+{
+  "name": "toolbar",
+  "element": "div",
+  "classes": {
+    "base": "gov-toolbar"
+  },
+  "a11y": {
+    "notes": [
+      "A layout container. It deliberately does not use role='toolbar', which would impose arrow-key navigation and take Tab away from the controls inside \u2014 wrong for a row of filters and a search box."
+    ]
+  },
+  "docs": {
+    "summary": "Groups search, filters and actions above a table.",
+    "whenToUse": [
+      "Above a table or list that can be searched or filtered."
+    ],
+    "whenNotToUse": [
+      "A form. Use the form's own layout."
+    ]
+  },
+  "examples": {
+    "basic": {
+      "children": [
+        {
+          "component": "input",
+          "props": {
+            "name": "search",
+            "label": "Search employees",
+            "type": "search",
+            "placeholder": "Search employees"
+          }
+        },
+        {
+          "component": "select",
+          "props": {
+            "name": "department",
+            "label": "Department",
+            "options": [
+              {
+                "value": "all",
+                "label": "All departments"
+              },
+              {
+                "value": "engineering",
+                "label": "Engineering"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

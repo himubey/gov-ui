@@ -1,0 +1,62 @@
+/*
+ * StatusBadge
+ *
+ * Tinted surface, dark text, always with a written label.
+ *
+ * The reference screens use a saturated fill with white text. Amber that
+ * way measures about 2.1:1 and fails SC 1.4.3 — and a user who cannot
+ * distinguish the fills has nothing else to read. The label is the
+ * status; the color reinforces it.
+ */
+
+.gov-status {
+  display: inline-flex;
+  align-items: center;
+
+  padding-block: var(--gov-space-1);
+  padding-inline: var(--gov-space-2);
+
+  border: var(--gov-border-width) solid transparent;
+  border-radius: var(--gov-radius-sm);
+
+  font-size: var(--gov-font-size-1);
+  font-weight: var(--gov-font-weight-bold);
+  line-height: var(--gov-line-height-tight);
+  white-space: nowrap;
+}
+
+.gov-status--success {
+  background: var(--gov-success-surface);
+  color: var(--gov-success-text);
+}
+
+.gov-status--warning {
+  background: var(--gov-warning-surface);
+  color: var(--gov-warning-text);
+}
+
+.gov-status--danger {
+  background: var(--gov-danger-surface);
+  color: var(--gov-danger-text);
+}
+
+.gov-status--info {
+  background: var(--gov-info-surface);
+  color: var(--gov-info-text);
+}
+
+.gov-status--neutral {
+  background: var(--gov-neutral-surface);
+  color: var(--gov-neutral-text);
+}
+
+/*
+ * Under forced colors the tints are discarded and every status looks
+ * alike. A border keeps the badge distinguishable from the surrounding
+ * cell text; the label continues to carry the meaning.
+ */
+@media (forced-colors: active) {
+  .gov-status {
+    border-color: CanvasText;
+  }
+}

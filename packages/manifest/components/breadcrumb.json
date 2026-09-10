@@ -1,0 +1,58 @@
+{
+  "name": "breadcrumb",
+  "element": "nav",
+  "classes": {
+    "base": "gov-breadcrumb",
+    "list": "gov-breadcrumb__list",
+    "item": "gov-breadcrumb__item",
+    "link": "gov-breadcrumb__link",
+    "current": "gov-breadcrumb__current"
+  },
+  "attributes": {
+    "aria-label": "Breadcrumb"
+  },
+  "a11y": {
+    "accessibleName": "The nav landmark label, 'Breadcrumb' by default.",
+    "notes": [
+      "An ordered list, so a screen reader announces how many levels there are.",
+      "The current page is a span with aria-current='page', not a link to itself."
+    ]
+  },
+  "docs": {
+    "summary": "Shows where the current page sits in the hierarchy.",
+    "whenToUse": [
+      "Pages nested two or more levels deep."
+    ],
+    "whenNotToUse": [
+      "Top-level pages, where it says nothing."
+    ]
+  },
+  "examples": {
+    "two-levels": {
+      "items": [
+        {
+          "label": "EMS Portal",
+          "href": "/"
+        },
+        {
+          "label": "Employees"
+        }
+      ]
+    },
+    "three-levels": {
+      "items": [
+        {
+          "label": "EMS Portal",
+          "href": "/"
+        },
+        {
+          "label": "Employees",
+          "href": "/employees"
+        },
+        {
+          "label": "Alex Johnson"
+        }
+      ]
+    }
+  }
+}

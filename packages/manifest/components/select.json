@@ -1,0 +1,89 @@
+{
+  "name": "select",
+  "element": "select",
+  "classes": {
+    "wrapper": "gov-field",
+    "wrapperInvalid": "gov-field--error",
+    "label": "gov-field__label",
+    "hint": "gov-field__hint",
+    "error": "gov-field__error",
+    "base": "gov-select",
+    "invalid": "gov-select--error"
+  },
+  "a11y": {
+    "accessibleName": "The associated label.",
+    "keyboard": {
+      "Tab": "Moves focus to the control.",
+      "Arrow keys": "Moves between options.",
+      "Type-ahead": "Jumps to a matching option."
+    },
+    "notes": [
+      "A native select. It is the only listbox that is correct on every browser, screen reader and mobile platform without a line of JavaScript.",
+      "Wires label, hint and error exactly as Input does."
+    ]
+  },
+  "docs": {
+    "summary": "A labelled select for choosing one option from a short list.",
+    "whenToUse": [
+      "Choosing one value from a known, short list."
+    ],
+    "whenNotToUse": [
+      "Two options. Use radios, which show both without a click.",
+      "Very long lists. Consider a filtered search instead."
+    ]
+  },
+  "examples": {
+    "basic": {
+      "name": "department",
+      "label": "Department",
+      "options": [
+        {
+          "value": "all",
+          "label": "All departments"
+        },
+        {
+          "value": "engineering",
+          "label": "Engineering"
+        },
+        {
+          "value": "finance",
+          "label": "Finance"
+        }
+      ]
+    },
+    "with-value": {
+      "name": "department",
+      "label": "Department",
+      "value": "finance",
+      "options": [
+        {
+          "value": "all",
+          "label": "All departments"
+        },
+        {
+          "value": "engineering",
+          "label": "Engineering"
+        },
+        {
+          "value": "finance",
+          "label": "Finance"
+        }
+      ]
+    },
+    "with-error": {
+      "name": "status",
+      "label": "Status",
+      "error": "Select a status.",
+      "options": [
+        {
+          "value": "",
+          "label": "Choose a status"
+        },
+        {
+          "value": "active",
+          "label": "Active"
+        }
+      ]
+    }
+  }
+}

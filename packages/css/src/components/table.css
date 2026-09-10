@@ -1,0 +1,126 @@
+/*
+ * Table
+ *
+ * Border-driven and dense. The flagship pattern for administrative
+ * software, so it earns more CSS than anything else here.
+ */
+
+/*
+ * The scroll container.
+ *
+ * Focusable in the markup, which is what makes an overflowing table
+ * reachable by keyboard. The focus ring from base.css applies, so a
+ * keyboard user can see where they are before scrolling.
+ */
+.gov-table-wrapper {
+  overflow-x: auto;
+  border: var(--gov-border-width) solid var(--gov-border);
+  border-radius: var(--gov-radius-md);
+  background: var(--gov-background);
+}
+
+.gov-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--gov-font-size-2);
+}
+
+.gov-table__caption {
+  padding: var(--gov-space-3) var(--gov-space-4);
+  text-align: start;
+  font-weight: var(--gov-font-weight-bold);
+  color: var(--gov-text);
+}
+
+.gov-table__head {
+  background: var(--gov-surface);
+}
+
+.gov-table__header {
+  padding: var(--gov-space-3) var(--gov-space-4);
+  text-align: start;
+  font-weight: var(--gov-font-weight-bold);
+  color: var(--gov-text);
+  border-block-end: var(--gov-border-width) solid var(--gov-border);
+  white-space: nowrap;
+}
+
+.gov-table__cell {
+  padding-block: var(--gov-table-row-padding-block);
+  padding-inline: var(--gov-space-4);
+  border-block-end: var(--gov-border-width) solid var(--gov-border);
+  color: var(--gov-text);
+  vertical-align: middle;
+}
+
+/* No trailing rule above the wrapper's own border. */
+.gov-table__row:last-child .gov-table__cell {
+  border-block-end: 0;
+}
+
+.gov-table__row:hover {
+  background: var(--gov-surface);
+}
+
+/*
+ * Numeric columns align to the end and use tabular figures, so digits
+ * line up down the column. The difference between a scannable ID column
+ * and a ragged one.
+ */
+.gov-table__header--numeric,
+.gov-table__cell--numeric {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * The sort control is a real link, so sorting works with no JavaScript.
+ * It fills the header cell to give a comfortable target.
+ */
+.gov-table__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gov-space-1);
+  color: inherit;
+  text-decoration: none;
+}
+
+.gov-table__sort:hover {
+  text-decoration: underline;
+}
+
+/*
+ * Sort direction shown with a character, not an icon font or an image.
+ * It survives forced-colors, needs no extra request, and is announced
+ * correctly because aria-sort on the header is what actually conveys
+ * the state — this is decoration.
+ */
+.gov-table__header[aria-sort="ascending"] .gov-table__sort::after {
+  content: "\2191";
+}
+
+.gov-table__header[aria-sort="descending"] .gov-table__sort::after {
+  content: "\2193";
+}
+
+/*
+ * Print.
+ *
+ * Caseworkers print records constantly, and a table that prints badly
+ * gets screenshotted instead. Repeating the header on each page is the
+ * single highest-value print rule there is.
+ */
+@media print {
+  .gov-table-wrapper {
+    overflow: visible;
+    border: 0;
+  }
+
+  .gov-table__head {
+    display: table-header-group;
+  }
+
+  .gov-table__row {
+    break-inside: avoid;
+  }
+}

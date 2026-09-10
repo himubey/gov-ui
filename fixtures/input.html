@@ -1,0 +1,24 @@
+<!--
+  GOV UI golden markup: input
+
+  Generated from packages/manifest/components/input.json
+  by scripts/conformance.mjs. Do not edit by hand.
+
+  This is the markup contract. Every emitter must produce DOM
+  equivalent to what is below.
+-->
+
+<!-- case: basic -->
+<div class="gov-field"><label class="gov-field__label" for="employee-name">Employee name</label><input class="gov-input" id="employee-name" name="employeeName" type="text"></div>
+
+<!-- case: with-hint -->
+<div class="gov-field"><label class="gov-field__label" for="employee-name">Employee name</label><p class="gov-field__hint" id="employee-name-hint">Enter their legal name.</p><input class="gov-input" id="employee-name" name="employeeName" type="text" aria-describedby="employee-name-hint"></div>
+
+<!-- case: with-error -->
+<div class="gov-field gov-field--error"><label class="gov-field__label" for="work-email">Work email</label><p class="gov-field__hint" id="work-email-hint">We only use this for payroll.</p><p class="gov-field__error" id="work-email-error"><span class="gov-visually-hidden">Error:</span> Enter a valid work email address.</p><input class="gov-input gov-input--error" id="work-email" name="workEmail" type="email" aria-describedby="work-email-hint work-email-error" aria-invalid="true"></div>
+
+<!-- case: search -->
+<div class="gov-field"><label class="gov-field__label" for="search">Search employees</label><input class="gov-input" id="search" name="search" type="search" placeholder="Search employees"></div>
+
+<!-- case: disabled -->
+<div class="gov-field"><label class="gov-field__label" for="employee-id">Employee ID</label><input class="gov-input" id="employee-id" name="employeeId" type="text" value="EMP-001" disabled></div>

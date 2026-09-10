@@ -1,0 +1,21 @@
+<!--
+  GOV UI golden markup: pagination
+
+  Generated from packages/manifest/components/pagination.json
+  by scripts/conformance.mjs. Do not edit by hand.
+
+  This is the markup contract. Every emitter must produce DOM
+  equivalent to what is below.
+-->
+
+<!-- case: first-page -->
+<nav class="gov-pagination" aria-label="Pagination"><ol class="gov-pagination__list"><li class="gov-pagination__item"><a class="gov-pagination__link gov-pagination__link--current" href="?page=1" aria-current="page"><span class="gov-visually-hidden">Page </span>1</a></li><li class="gov-pagination__item"><a class="gov-pagination__link" href="?page=2"><span class="gov-visually-hidden">Page </span>2</a></li><li class="gov-pagination__item"><a class="gov-pagination__link" href="?page=3"><span class="gov-visually-hidden">Page </span>3</a></li></ol><a class="gov-pagination__link gov-pagination__link--next" href="?page=2" rel="next">Next</a></nav>
+
+<!-- case: middle-page -->
+<nav class="gov-pagination" aria-label="Pagination"><a class="gov-pagination__link gov-pagination__link--previous" href="?page=1" rel="prev">Previous</a><ol class="gov-pagination__list"><li class="gov-pagination__item"><a class="gov-pagination__link" href="?page=1"><span class="gov-visually-hidden">Page </span>1</a></li><li class="gov-pagination__item"><a class="gov-pagination__link gov-pagination__link--current" href="?page=2" aria-current="page"><span class="gov-visually-hidden">Page </span>2</a></li><li class="gov-pagination__item"><a class="gov-pagination__link" href="?page=3"><span class="gov-visually-hidden">Page </span>3</a></li></ol><a class="gov-pagination__link gov-pagination__link--next" href="?page=3" rel="next">Next</a></nav>
+
+<!-- case: last-page -->
+<nav class="gov-pagination" aria-label="Pagination"><a class="gov-pagination__link gov-pagination__link--previous" href="?page=2" rel="prev">Previous</a><ol class="gov-pagination__list"><li class="gov-pagination__item"><a class="gov-pagination__link" href="?page=1"><span class="gov-visually-hidden">Page </span>1</a></li><li class="gov-pagination__item"><a class="gov-pagination__link" href="?page=2"><span class="gov-visually-hidden">Page </span>2</a></li><li class="gov-pagination__item"><a class="gov-pagination__link gov-pagination__link--current" href="?page=3" aria-current="page"><span class="gov-visually-hidden">Page </span>3</a></li></ol></nav>
+
+<!-- case: single-page -->
+<nav class="gov-pagination" aria-label="Pagination"><ol class="gov-pagination__list"><li class="gov-pagination__item"><a class="gov-pagination__link gov-pagination__link--current" href="?page=1" aria-current="page"><span class="gov-visually-hidden">Page </span>1</a></li></ol></nav>

@@ -1,8 +1,8 @@
 /*
  * GOV UI — component markup contract.
  *
- * Every component's markup is declared once, here, as data. Six things
- * derive from it:
+ * Every component's markup is declared once, here. Six things derive
+ * from it:
  *
  *   - the plain-HTML reference implementation
  *   - the golden fixtures
@@ -23,6 +23,10 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { renderers } from "./renderers/index.mjs";
+import { el, raw } from "./render.mjs";
+
+export { escapeHtml, el, raw } from "./render.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const COMPONENTS_DIR = join(here, "components");
@@ -52,32 +56,23 @@ export function validateManifest(manifest, source = manifest.name) {
   if (!manifest.classes.base.startsWith("gov-")) {
     throw new Error("manifest " + source + " base class must use the gov- prefix");
   }
+  if (!manifest.examples || Object.keys(manifest.examples).length === 0) {
+    throw new Error(
+      "manifest " + source + " must declare at least one example — examples are the conformance cases",
+    );
+  }
   return true;
-}
-
-/*
- * HTML escaping.
- *
- * Text and attribute values are always escaped. GOV UI has no
- * dangerouslySetInnerHTML-shaped escape hatch, because the markup
- * contract is the security boundary for every server-rendered emitter
- * that copies it.
- */
-const ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
-
-export function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (c) => ESCAPES[c]);
 }
 
 /*
  * Resolve the class list for a set of props.
  *
  * Order is deterministic — base first, then each modifier in the order
- * the manifest declares its variants — so that golden fixtures are
- * stable and diffs stay readable.
+ * the manifest declares its variants — so golden fixtures stay stable
+ * and diffs stay readable.
  */
 export function resolveClasses(manifest, props = {}) {
-  const classes = [manifest.classes.base];
+  const list = [manifest.classes.base];
   const variants = manifest.variants || {};
   const defaults = manifest.defaults || {};
 
@@ -94,25 +89,56 @@ export function resolveClasses(manifest, props = {}) {
     }
 
     const pattern = manifest.classes[key] || manifest.classes.base + "--{" + key + "}";
-    classes.push(pattern.replace("{" + key + "}", String(value)));
+    list.push(pattern.replace("{" + key + "}", String(value)));
   }
 
-  if (props.className) classes.push(props.className);
-  return classes;
+  if (props.className) list.push(props.className);
+  return list;
 }
 
 /*
- * Reference renderer.
+ * Create a renderer bound to a set of manifests.
  *
- * This is the definition of correct markup. Adapters are not required to
- * share this code — a Razor tag helper obviously cannot — but they are
- * required to produce markup that normalizes to the same thing.
+ * Components compose by passing `{ component, props }` descriptors as
+ * children, so the whole tree stays escaped and declarative — there is
+ * no path for raw markup to be injected.
  */
-export function renderToHtml(manifest, props = {}) {
-  const tag = props.as || manifest.element;
-  const classes = resolveClasses(manifest, props);
+export function createRenderer(manifests = loadManifests()) {
+  function render(name, props = {}) {
+    const manifest = manifests[name];
+    if (!manifest) throw new Error("unknown component: " + name);
 
-  const attributes = { class: classes.join(" ") };
+    const resolved = { ...props };
+    if (resolved.children !== undefined) {
+      resolved.children = resolveChildren(resolved.children);
+    }
+
+    const renderer = renderers[name];
+    const html = renderer
+      ? renderer(manifest, resolved, render)
+      : renderLeaf(manifest, resolved);
+
+    return String(html);
+  }
+
+  /* Turn `{component, props}` descriptors into rendered markup. */
+  function resolveChildren(children) {
+    if (Array.isArray(children)) return children.map(resolveChildren);
+    if (children && typeof children === "object" && children.component) {
+      return raw(render(children.component, children.props || {}));
+    }
+    return children;
+  }
+
+  return render;
+}
+
+/*
+ * Fallback for single-element components that need no bespoke renderer.
+ */
+function renderLeaf(manifest, props) {
+  const tag = props.as || manifest.element;
+  const attributes = { class: resolveClasses(manifest, props).join(" ") };
   Object.assign(attributes, manifest.attributes || {});
 
   // Caller-supplied attributes win over manifest defaults, so a Button
@@ -121,23 +147,18 @@ export function renderToHtml(manifest, props = {}) {
     if (value === undefined || value === null || value === false) {
       delete attributes[key];
     } else {
-      attributes[key] = value === true ? "" : value;
+      attributes[key] = value;
     }
   }
 
-  const rendered = Object.keys(attributes)
-    .map((key) => {
-      const value = attributes[key];
-      return value === "" ? key : key + '="' + escapeHtml(value) + '"';
-    })
-    .join(" ");
+  if (manifest.voidElement) return el(tag, attributes);
+  return el(tag, attributes, props.children);
+}
 
-  const open = "<" + tag + (rendered ? " " + rendered : "") + ">";
-
-  if (manifest.voidElement) return open;
-
-  const children = props.children === undefined ? "" : escapeHtml(props.children);
-  return open + children + "</" + tag + ">";
+/** Convenience for a one-off render without building a renderer. */
+export function renderToHtml(manifest, props = {}) {
+  const render = createRenderer({ [manifest.name]: manifest });
+  return render(manifest.name, props);
 }
 
 /*
@@ -154,8 +175,9 @@ export function renderToHtml(manifest, props = {}) {
  */
 export function normalizeHtml(html) {
   return String(html)
-    .replace(/<([a-zA-Z][\w-]*)((?:\s+[^\s=>]+(?:=(?:"[^"]*"|'[^']*'|[^\s>]+))?)*)\s*(\/?)>/g,
-      (_match, tag, attrs, selfClose) => {
+    .replace(
+      /<([a-zA-Z][\w-]*)((?:\s+[^\s=>]+(?:=(?:"[^"]*"|'[^']*'|[^\s>]+))?)*)\s*(\/?)>/g,
+      (_match, tag, attrs) => {
         const parsed = [];
         const pattern = /([^\s=]+)(?:=(?:"([^"]*)"|'([^']*)'|([^\s]+)))?/g;
         let m;
@@ -170,12 +192,21 @@ export function normalizeHtml(html) {
           if (name === "class") {
             value = value.trim().split(/\s+/).filter(Boolean).sort().join(" ");
           }
-          parsed.push(name + '="' + value + '"');
+          // In HTML a bare boolean attribute and one with an empty
+          // value both resolve to the empty string, so `disabled` and
+          // `disabled=""` describe the same DOM. React emits the latter,
+          // the reference renderer the former.
+          parsed.push(value === "" ? name : name + '="' + value + '"');
         }
         parsed.sort();
         const body = parsed.length ? " " + parsed.join(" ") : "";
-        return "<" + tag.toLowerCase() + body + (selfClose ? "/" : "") + ">";
-      })
+        // The trailing slash in a start tag is ignored by HTML parsers,
+        // so <input> and <input /> describe the same DOM. React emits
+        // the slash and the reference renderer does not; without this,
+        // every void element would read as a false divergence.
+        return "<" + tag.toLowerCase() + body + ">";
+      },
+    )
     // Closing tags too: HTML tag names are case-insensitive, so
     // </BUTTON> and </button> describe the same DOM.
     .replace(/<\/([a-zA-Z][\w-]*)\s*>/g, (_m, tag) => "</" + tag.toLowerCase() + ">")

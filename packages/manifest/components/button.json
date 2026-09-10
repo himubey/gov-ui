@@ -7,8 +7,15 @@
     "size": "gov-button--{size}"
   },
   "variants": {
-    "variant": ["primary", "secondary", "danger"],
-    "size": ["sm", "md"]
+    "variant": [
+      "primary",
+      "secondary",
+      "danger"
+    ],
+    "size": [
+      "sm",
+      "md"
+    ]
   },
   "defaults": {
     "variant": "primary",
@@ -21,13 +28,12 @@
     "accessibleName": "Visible text content. An icon-only button requires aria-label.",
     "keyboard": {
       "Enter": "Activates the button.",
-      "Space": "Activates the button.",
-      "Tab": "Moves focus to the button."
+      "Space": "Activates the button."
     },
     "notes": [
       "Uses the native button element so browser keyboard behavior and form participation stay predictable.",
       "type defaults to button, not submit, so a button inside a form does not submit it by accident.",
-      "Disabled buttons are removed from the tab order by the platform. Where the reason for disabling is not obvious, prefer an enabled button that explains the problem on activation."
+      "Disabled buttons leave the tab order. Where the reason for disabling is not obvious, prefer an enabled button that explains the problem on activation."
     ]
   },
   "docs": {
@@ -36,7 +42,36 @@
       "Performing an action: saving, submitting, deleting, opening a dialog."
     ],
     "whenNotToUse": [
-      "Navigating to another page. Use Link, so that middle-click, right-click and browser history all behave as the user expects."
+      "Navigating to another page. Use a link, so middle-click, right-click and browser history behave as the user expects."
     ]
+  },
+  "examples": {
+    "primary": {
+      "children": "Save"
+    },
+    "secondary": {
+      "variant": "secondary",
+      "children": "Cancel"
+    },
+    "danger": {
+      "variant": "danger",
+      "children": "Delete"
+    },
+    "small": {
+      "size": "sm",
+      "children": "Filter"
+    },
+    "disabled": {
+      "attributes": {
+        "disabled": true
+      },
+      "children": "Save"
+    },
+    "submit": {
+      "attributes": {
+        "type": "submit"
+      },
+      "children": "Save"
+    }
   }
 }

@@ -22,65 +22,54 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { loadManifests, renderToHtml, isEquivalent, normalizeHtml } from "../packages/manifest/index.mjs";
+import { loadManifests, createRenderer, isEquivalent, normalizeHtml } from "../packages/manifest/index.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const FIXTURES_DIR = join(here, "..", "fixtures");
 
 /*
- * Build the case list for a component: every combination of its declared
- * variants, plus the defaults-only case.
+ * Cases come from the manifest's declared examples.
  *
- * Exhaustive combinations are affordable because the manifests keep
- * variant lists deliberately short. If a component ever produces an
- * unreasonable number of cases, that is a signal its API is too large
- * (see CLAUDE.md section 3).
+ * Explicit rather than generated: every golden case has a meaningful
+ * name, examples double as the documentation, and reviewers see exactly
+ * what is covered. Coverage is not left to trust — a test asserts that
+ * every declared variant value appears in at least one example.
  */
 export function casesFor(manifest) {
-  const variants = manifest.variants || {};
-  const keys = Object.keys(variants);
-
-  let combinations = [{}];
-  for (const key of keys) {
-    const next = [];
-    for (const combo of combinations) {
-      for (const value of variants[key]) {
-        next.push({ ...combo, [key]: value });
-      }
-    }
-    combinations = next;
-  }
-
-  const label = (props) =>
-    keys.length === 0 ? "default" : keys.map((k) => k + "-" + props[k]).join("_");
-
-  const cases = combinations.map((props) => ({
-    name: label(props),
-    props: { ...props, children: sampleContent(manifest) },
-  }));
-
-  // Defaults-only: proves the manifest's declared defaults are applied.
-  cases.unshift({
-    name: "defaults",
-    props: { children: sampleContent(manifest) },
-  });
-
-  return cases;
+  return Object.entries(manifest.examples || {}).map(([name, props]) => ({ name, props }));
 }
 
-function sampleContent(manifest) {
-  const summary = (manifest.docs && manifest.docs.summary) || "";
-  return summary.includes("action") ? "Save" : "Example";
+/*
+ * Every variant value a manifest declares must appear in some example,
+ * otherwise it ships with no golden markup and no adapter is ever
+ * checked against it.
+ */
+export function uncoveredVariants(manifest) {
+  const missing = [];
+  const examples = Object.values(manifest.examples || {});
+
+  for (const [key, values] of Object.entries(manifest.variants || {})) {
+    const seen = new Set();
+    for (const props of examples) {
+      const value = props[key] === undefined ? (manifest.defaults || {})[key] : props[key];
+      if (value !== undefined) seen.add(value);
+    }
+    for (const value of values) {
+      if (!seen.has(value)) missing.push(manifest.name + "." + key + " = " + value);
+    }
+  }
+  return missing;
 }
 
 /** Render every case for every component with the reference renderer. */
 export function referenceMarkup(manifests = loadManifests()) {
+  const render = createRenderer(manifests);
   const output = {};
   for (const [name, manifest] of Object.entries(manifests)) {
     output[name] = casesFor(manifest).map((testCase) => ({
       name: testCase.name,
       props: testCase.props,
-      html: renderToHtml(manifest, testCase.props),
+      html: render(name, testCase.props),
     }));
   }
   return output;
@@ -188,7 +177,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const manifests = loadManifests();
   // The reference renderer is itself an emitter, which verifies that the
   // goldens on disk still match the manifests that produced them.
-  const result = checkEmitter("reference", (name, props) => renderToHtml(manifests[name], props), manifests);
+  const render = createRenderer(manifests);
+  const result = checkEmitter("reference", render, manifests);
 
   if (result.failures.length === 0) {
     const total = Object.values(referenceMarkup(manifests)).reduce((n, c) => n + c.length, 0);
