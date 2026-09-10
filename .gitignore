@@ -8,5 +8,6 @@ coverage/
 # Anchored to the repo root. Unanchored, "docs/" also matches apps/docs/
 # and would silently exclude the documentation site's source.
 /docs/
+/screen
 CLAUDE.md
 GOV_UI_Project_Specification.md
