@@ -3,13 +3,15 @@
   <desc>Wordmark for GOV UI, an independent open-source design system for public-sector software. Deliberately carries no state emblem, seal or crown.</desc>
 
   <!--
-    Every colour here is a GOV UI token, so the banner is literally made
-    of the design system it advertises:
+    Every colour here is a GOV UI token, so the banner is made of the
+    design system it advertises. Token names are written without their
+    leading dashes because a double hyphen is not legal inside an XML
+    comment, and an SVG that is not well-formed is silently rejected by
+    strict consumers such as GitHub.
 
-      #0b2a55  --gov-primary
-      #ffdd00  --gov-focus
-      #15803d  --gov-success      #b45309  --gov-warning
-      #b91c1c  --gov-danger       #0369a1  --gov-info
+      #0b2a55  gov-primary        #ffdd00  gov-focus
+      #15803d  gov-success        #b45309  gov-warning
+      #b91c1c  gov-danger         #0369a1  gov-info
   -->
 
   <rect width="1200" height="320" fill="#0b2a55"/>

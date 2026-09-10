@@ -85,6 +85,42 @@ describe("README", () => {
     );
   });
 
+  test("the banner is well-formed XML", () => {
+    /*
+     * GitHub sanitises SVG and silently refuses to render anything that
+     * is not well-formed, showing only "invalid image source". macOS
+     * previews it happily, so the failure is invisible locally.
+     *
+     * The specific trap: an XML comment may not contain a double hyphen,
+     * which makes it impossible to write CSS custom property names like
+     * --gov-primary in a comment. That is exactly how this file broke.
+     */
+    const svg = readFileSync(join(root, "assets/banner.svg"), "utf8");
+
+    for (const match of svg.matchAll(/<!--([\s\S]*?)-->/g)) {
+      assert.ok(
+        !match[1].includes("--"),
+        "an XML comment contains a double hyphen, which is not legal and makes " +
+          "the file unrenderable on GitHub: " + match[1].trim().slice(0, 60),
+      );
+    }
+
+    // Tag balance. Enough to catch the mistakes that actually happen in a
+    // hand-written SVG; a full parser would be more than this needs.
+    const withoutComments = svg.replace(/<!--[\s\S]*?-->/g, "");
+    const stack = [];
+    for (const match of withoutComments.matchAll(/<(\/?)([a-zA-Z][\w:-]*)[^>]*?(\/?)>/g)) {
+      const [, closing, tag, selfClosing] = match;
+      if (selfClosing) continue;
+      if (closing) {
+        assert.equal(stack.pop(), tag, "mismatched closing tag </" + tag + ">");
+      } else {
+        stack.push(tag);
+      }
+    }
+    assert.deepEqual(stack, [], "unclosed tags: " + stack.join(", "));
+  });
+
   test("the banner carries no official insignia", () => {
     const svg = readFileSync(join(root, "assets/banner.svg"), "utf8").toLowerCase();
     for (const term of ["crown", "emblem", "ashoka", "royal", "seal"]) {
