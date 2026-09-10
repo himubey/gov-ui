@@ -50,7 +50,16 @@ function relativeTargets(markdown) {
 describe("README", () => {
   test("every relative link points at a file git actually tracks", () => {
     const tracked = trackedFiles();
-    const broken = relativeTargets(readme).filter((target) => !tracked.has(target));
+
+    // A trailing slash is a directory link. GitHub renders those as the
+    // folder listing (or its README), so the target is valid when the
+    // repository tracks anything beneath it.
+    const resolves = (target) =>
+      target.endsWith("/")
+        ? [...tracked].some((file) => file.startsWith(target))
+        : tracked.has(target);
+
+    const broken = relativeTargets(readme).filter((target) => !resolves(target));
 
     assert.deepEqual(
       broken,

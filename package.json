@@ -26,8 +26,7 @@
     "conformance:update": "node scripts/conformance.mjs --update",
     "verify": "npm run build && npm run check:contrast && npm run check:conformance && npm run check:deps && npm run check:budget && npm run check:examples && npm test",
     "check:examples": "tsc -p examples/react/tsconfig.json",
-    "build:docs": "node apps/docs/build.mjs",
-    "docs:md": "node scripts/build-docs.mjs"
+    "build:docs": "node apps/docs/build.mjs"
   },
   "devDependencies": {
     "@types/react": "^18.3.31",

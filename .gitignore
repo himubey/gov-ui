@@ -4,10 +4,22 @@ dist/
 *.log
 .next/
 coverage/
+
+# Editor and agent session state.
 .claude
-# Anchored to the repo root. Unanchored, "docs/" also matches apps/docs/
-# and would silently exclude the documentation site's source.
-/docs/
+
+# Reference screenshots of third-party products, kept locally as design
+# reference only.
 /screen
+
+# Generated markdown component docs. The documentation site in apps/docs
+# covers the same ground and is what readers actually use, so publishing
+# both would mean maintaining two copies that drift.
+#
+# Anchored to the repo root: unanchored, "docs/" would also match
+# apps/docs/ and silently exclude the documentation site's source.
+/docs/components/
+
+# Working instructions for coding agents. The durable engineering rules
+# live in CONTRIBUTING.md, which is the file contributors should read.
 CLAUDE.md
-GOV_UI_Project_Specification.md

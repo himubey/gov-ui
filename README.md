@@ -267,6 +267,8 @@ Collapsing them into one light grey is among the most common ways a design syste
 | **High contrast** | `forced-colors: active` supported |
 | **Internationalisation** | Logical properties throughout; RTL verified; Indic-script safe |
 
+The evidence lives in [`docs/compliance/`](docs/compliance/).
+
 **What runs on every commit:**
 
 ```
@@ -368,9 +370,10 @@ Every live example is the **golden markup**, rendered verbatim. The documentatio
 
 It should feel like **infrastructure** — disappearing behind the application, making it clear, reliable and familiar. Users of government software rarely chose to be there; they are renewing a licence, filing a return or working a case queue. The interface earns its keep by being predictable, not memorable.
 
-The reasoning behind each decision lives in `docs/design-principles.md`, and the
-implementation rules for contributors — and for coding agents — in `CLAUDE.md`.
-Both are generated or maintained alongside the code rather than published here.
+See [`docs/design-principles.md`](docs/design-principles.md) for the reasoning behind
+each decision, [`CONTRIBUTING.md`](CONTRIBUTING.md) for the engineering guide, and
+[`GOV_UI_Project_Specification.md`](GOV_UI_Project_Specification.md) for the full
+specification and roadmap.
 
 ---
 
