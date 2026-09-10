@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.next/
+coverage/
+.claude
+docs/
+CLAUDE.md
+GOV_UI_Project_Specification.md

@@ -1,0 +1,26 @@
+{
+  "name": "gov-ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lightweight UI for government software.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "node packages/css/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:conformance": "node scripts/conformance.mjs",
+    "check:budget": "node scripts/check-budget.mjs",
+    "check:deps": "node scripts/check-deps.mjs",
+    "conformance:update": "node scripts/conformance.mjs --update",
+    "verify": "npm run build && npm run check:contrast && npm run check:conformance && npm run check:deps && npm run check:budget && npm test"
+  }
+}

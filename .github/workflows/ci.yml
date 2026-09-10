@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# The foundation has no dependencies, so there is nothing to install and
+# nothing to cache. If a step here ever needs `npm install`, that is worth
+# a second look rather than a quick fix.
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build
+        run: npm run build
+
+      - name: Contrast — every token pair meets its WCAG 2.2 minimum
+        run: npm run check:contrast
+
+      - name: Conformance — every emitter matches the golden markup
+        run: npm run check:conformance
+
+      - name: Dependencies — no package carries a runtime dependency
+        run: npm run check:deps
+
+      - name: Budget — payload stays within the gzipped limits
+        run: npm run check:budget
+
+      - name: Tests
+        run: npm test
+
+      # The golden fixtures are generated from the manifests. If a change
+      # to a manifest was not accompanied by regenerated fixtures, the
+      # markup contract and the committed goldens have diverged, and the
+      # diff belongs in the pull request where it can be reviewed.
+      - name: Golden fixtures are up to date
+        run: |
+          npm run conformance:update
+          if ! git diff --quiet -- fixtures/; then
+            echo "::error::Golden fixtures are stale. Run 'npm run conformance:update' and commit the result."
+            git diff -- fixtures/
+            exit 1
+          fi

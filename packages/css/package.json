@@ -1,0 +1,19 @@
+{
+  "name": "@gov-ui/css",
+  "version": "0.0.0",
+  "description": "Framework-independent stylesheet and design tokens for GOV UI.",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/gov-ui.css",
+  "style": "dist/gov-ui.css",
+  "exports": {
+    ".": "./dist/gov-ui.css",
+    "./tokens.css": "./src/tokens.css",
+    "./src/*": "./src/*"
+  },
+  "files": ["dist", "src"],
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "sideEffects": ["*.css"]
+}
