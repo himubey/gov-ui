@@ -28,6 +28,7 @@ const SITE = {
   name: "GOV UI",
   tagline: "Lightweight UI for government software.",
   version: "v0.1 (pre-release)",
+  repo: "https://github.com/himubey/gov-ui",
 };
 
 /* ---------------------------------------------------------------
@@ -169,7 +170,7 @@ ${content}
     <ul class="docs-footer__links">
       <li><a href="accessibility.html">Accessibility</a></li>
       <li><a href="install.html">Install</a></li>
-      <li><a href="https://github.com/">GitHub</a></li>
+      <li><a href="${SITE.repo}">GitHub</a></li>
     </ul>
     <p class="docs-footer__note">
       MIT licensed. <strong>Not affiliated with, or endorsed by, any government.</strong>
@@ -324,8 +325,8 @@ function componentPage(name, manifest, golden) {
   out.push("        </tbody></table></div>");
 
   out.push(
-    `    <p><a href="https://github.com/">View the manifest</a> for this component:
-    <code>packages/manifest/components/${escape(name)}.json</code></p>`,
+    `    <p><a href="${SITE.repo}/blob/main/packages/manifest/components/${escape(name)}.json">View the manifest</a>
+    for this component: <code>packages/manifest/components/${escape(name)}.json</code></p>`,
   );
 
   return out.join("\n");

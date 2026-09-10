@@ -1,0 +1,57 @@
+name: Deploy documentation
+
+on:
+  push:
+    branches: [main]
+  # So the site can be republished without an unrelated commit to main.
+  workflow_dispatch:
+
+# Publishing is idempotent, but two deploys racing would leave whichever
+# finished last in place rather than whichever was newer. Queue instead,
+# and let an in-flight deploy finish rather than cancelling it half-done.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dev toolchain
+        run: npm ci
+
+      # Builds gov-ui.css and gov-ui.js first, which the site copies in
+      # and links exactly the way a consumer does.
+      - name: Build
+        run: npm run build
+
+      # The site is only worth publishing if it is correct. This is the
+      # same suite CI runs, including the checks that the documentation's
+      # live examples are the golden markup.
+      - name: Verify
+        run: npm run verify
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/docs/dist
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
