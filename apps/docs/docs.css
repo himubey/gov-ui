@@ -1,0 +1,373 @@
+/*
+ * Documentation site shell.
+ *
+ * This is APPLICATION css, not part of the design system. GOV UI does
+ * not ship a documentation-site layout, and inventing one here would be
+ * building components nobody asked for (CLAUDE.md section 49).
+ *
+ * Two rules keep it honest:
+ *
+ *   1. Every value is a GOV UI token. Not one raw hex, spacing value or
+ *      font size. If something cannot be expressed in tokens, that is a
+ *      gap in the token layer worth fixing rather than working around.
+ *   2. Everything the design system already provides — buttons, tables,
+ *      fields, status badges, focus, typography — comes from gov-ui.css.
+ *      This file only handles the shell: header, sidebar, footer, and
+ *      the example/code presentation.
+ *
+ * The site is the design system's first real consumer, so anything
+ * awkward here is a finding.
+ */
+
+/* ---------------------------------------------------------------
+ * Shell
+ * ------------------------------------------------------------- */
+
+.docs-header {
+  background: var(--gov-primary);
+  color: var(--gov-primary-contrast);
+  padding-block: var(--gov-space-4);
+  padding-inline: var(--gov-space-6);
+}
+
+.docs-header__inner {
+  max-width: var(--gov-content-width);
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--gov-space-3);
+}
+
+.docs-header__name {
+  font-size: var(--gov-font-size-6);
+  font-weight: var(--gov-font-weight-bold);
+  line-height: var(--gov-line-height-tight);
+  color: var(--gov-primary-contrast);
+  text-decoration: none;
+}
+
+.docs-header__tagline {
+  font-size: var(--gov-font-size-2);
+  /* Not a muted token: those are tuned for dark text on light surfaces
+   * and would fail contrast here. */
+  color: var(--gov-primary-contrast);
+  opacity: 0.85;
+}
+
+/*
+ * Version bar.
+ *
+ * One version today. It exists because a design system that reaches its
+ * second major version and only then adds version switching has already
+ * broken everyone's bookmarks.
+ */
+.docs-versions {
+  border-block-end: var(--gov-border-width) solid var(--gov-border);
+  background: var(--gov-background);
+  padding-inline: var(--gov-space-6);
+}
+
+.docs-versions__inner {
+  max-width: var(--gov-content-width);
+  margin-inline: auto;
+  display: flex;
+  gap: var(--gov-space-5);
+}
+
+.docs-versions__item {
+  padding-block: var(--gov-space-3);
+  font-size: var(--gov-font-size-2);
+  font-weight: var(--gov-font-weight-bold);
+  color: var(--gov-primary);
+  text-decoration: none;
+  border-block-end: 4px solid transparent;
+}
+
+.docs-versions__item[aria-current="page"] {
+  color: var(--gov-text);
+  border-block-end-color: var(--gov-primary);
+}
+
+/* ---------------------------------------------------------------
+ * Layout
+ * ------------------------------------------------------------- */
+
+.docs-layout {
+  max-width: var(--gov-content-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 18rem minmax(0, 1fr);
+  gap: var(--gov-space-7);
+  padding-inline: var(--gov-space-6);
+  padding-block: var(--gov-space-6);
+  align-items: start;
+}
+
+/* One column on narrow screens: the sidebar becomes a contents list
+ * above the page rather than a cramped rail beside it. */
+@media (max-width: 60em) {
+  .docs-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gov-space-5);
+    padding-inline: var(--gov-space-4);
+  }
+}
+
+.docs-sidebar {
+  border-inline-end: var(--gov-border-width) solid var(--gov-border);
+  padding-inline-end: var(--gov-space-5);
+}
+
+@media (max-width: 60em) {
+  .docs-sidebar {
+    border-inline-end: 0;
+    padding-inline-end: 0;
+    border-block-end: var(--gov-border-width) solid var(--gov-border);
+    padding-block-end: var(--gov-space-4);
+  }
+}
+
+.docs-nav__group {
+  margin-block-end: var(--gov-space-5);
+}
+
+.docs-nav__heading {
+  font-size: var(--gov-font-size-1);
+  font-weight: var(--gov-font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gov-text-muted);
+  margin-block-end: var(--gov-space-2);
+}
+
+.docs-nav__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.docs-nav__link {
+  display: block;
+  padding-block: var(--gov-space-2);
+  padding-inline: var(--gov-space-3);
+  font-size: var(--gov-font-size-2);
+  font-weight: var(--gov-font-weight-bold);
+  color: var(--gov-primary);
+  text-decoration: none;
+  border-inline-start: 4px solid transparent;
+}
+
+.docs-nav__link:hover {
+  background: var(--gov-surface);
+  text-decoration: underline;
+}
+
+/* The current page is marked with aria-current in the markup, so the
+ * state is available without seeing the fill. */
+.docs-nav__link[aria-current="page"] {
+  background: var(--gov-surface);
+  border-inline-start-color: var(--gov-primary);
+  color: var(--gov-text);
+}
+
+/* ---------------------------------------------------------------
+ * Content
+ * ------------------------------------------------------------- */
+
+.docs-content {
+  min-width: 0;
+}
+
+.docs-content h1 {
+  font-size: var(--gov-font-size-9);
+  margin-block-end: var(--gov-space-5);
+}
+
+.docs-content h2 {
+  font-size: var(--gov-font-size-6);
+  margin-block: var(--gov-space-7) var(--gov-space-3);
+  padding-block-end: var(--gov-space-2);
+  border-block-end: var(--gov-border-width) solid var(--gov-border);
+}
+
+.docs-content h3 {
+  font-size: var(--gov-font-size-4);
+  margin-block: var(--gov-space-6) var(--gov-space-2);
+}
+
+.docs-content p,
+.docs-content li {
+  /* A measure limit. Long lines are hard to track back from the end of
+   * one to the start of the next, which is a readability problem before
+   * it is an aesthetic one. */
+  max-width: 42em;
+}
+
+.docs-content a {
+  color: var(--gov-primary);
+}
+
+.docs-content ul {
+  padding-inline-start: var(--gov-space-5);
+}
+
+@media (max-width: 40em) {
+  .docs-content h1 {
+    font-size: var(--gov-font-size-7);
+  }
+}
+
+/*
+ * Callout. Deliberately not a design-system component: Alert exists in
+ * the inventory but is not built yet, and inventing it here to style a
+ * documentation note would be exactly the speculative work the project
+ * rules forbid.
+ */
+.docs-note {
+  max-width: 42em;
+  margin-block: var(--gov-space-5);
+  padding: var(--gov-space-4);
+  border-inline-start: 4px solid var(--gov-info);
+  background: var(--gov-info-surface);
+  color: var(--gov-info-text);
+}
+
+.docs-note > :first-child { margin-block-start: 0; }
+.docs-note > :last-child { margin-block-end: 0; }
+
+/* ---------------------------------------------------------------
+ * Examples and code
+ * ------------------------------------------------------------- */
+
+.docs-example {
+  margin-block: var(--gov-space-4);
+  border: var(--gov-border-width) solid var(--gov-border);
+  border-radius: var(--gov-radius-md);
+  overflow: hidden;
+}
+
+/*
+ * The live example renders the golden markup itself — the same string
+ * the conformance suite checks every emitter against. Nothing here can
+ * show markup that is not the contract.
+ */
+.docs-example__preview {
+  padding: var(--gov-space-5);
+  background: var(--gov-background);
+}
+
+/*
+ * A specimen that renders its own heading lives in an iframe, so the
+ * documenting page keeps a single coherent heading outline. Sized
+ * generously rather than measured by script: the site works with
+ * JavaScript disabled, and a fixed height is honest about that.
+ */
+.docs-example__frame {
+  display: block;
+  width: 100%;
+  height: 12rem;
+  border: 0;
+  background: var(--gov-background);
+}
+
+.docs-example__label {
+  padding-block: var(--gov-space-2);
+  padding-inline: var(--gov-space-4);
+  background: var(--gov-surface);
+  border-block-end: var(--gov-border-width) solid var(--gov-border);
+  font-size: var(--gov-font-size-1);
+  font-weight: var(--gov-font-weight-bold);
+  color: var(--gov-text-muted);
+}
+
+.docs-code {
+  margin: 0;
+  padding: var(--gov-space-4);
+  overflow-x: auto;
+  background: var(--gov-surface-sunken);
+  border-block-start: var(--gov-border-width) solid var(--gov-border);
+  font-family: var(--gov-font-tabular);
+  font-size: var(--gov-font-size-1);
+  line-height: var(--gov-line-height-body);
+  color: var(--gov-text);
+}
+
+.docs-code--standalone {
+  border: var(--gov-border-width) solid var(--gov-border);
+  border-radius: var(--gov-radius-md);
+  margin-block: var(--gov-space-4);
+  max-width: 60em;
+}
+
+.docs-content code {
+  font-family: var(--gov-font-tabular);
+  font-size: 0.9em;
+  padding-inline: var(--gov-space-1);
+  background: var(--gov-surface-sunken);
+  border-radius: var(--gov-radius-sm);
+}
+
+.docs-code code {
+  padding: 0;
+  background: none;
+}
+
+/* ---------------------------------------------------------------
+ * Footer
+ * ------------------------------------------------------------- */
+
+.docs-footer {
+  margin-block-start: var(--gov-space-9);
+  border-block-start: 4px solid var(--gov-primary);
+  background: var(--gov-surface);
+  padding-block: var(--gov-space-6);
+  padding-inline: var(--gov-space-6);
+}
+
+.docs-footer__inner {
+  max-width: var(--gov-content-width);
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gov-space-5);
+  justify-content: space-between;
+  font-size: var(--gov-font-size-2);
+}
+
+.docs-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gov-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.docs-footer__note {
+  max-width: 42em;
+  margin: 0;
+  color: var(--gov-text-muted);
+}
+
+/* ---------------------------------------------------------------
+ * Search
+ *
+ * Progressive enhancement. Without JavaScript the field is hidden
+ * rather than left present and inert: a search box that silently does
+ * nothing is worse than no search box.
+ * ------------------------------------------------------------- */
+
+.docs-search {
+  margin-block-end: var(--gov-space-5);
+}
+
+.docs-search[hidden] {
+  display: none;
+}
+
+.docs-search__status {
+  margin-block-start: var(--gov-space-2);
+  font-size: var(--gov-font-size-1);
+  color: var(--gov-text-muted);
+}
