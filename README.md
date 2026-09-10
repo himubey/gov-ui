@@ -353,6 +353,10 @@ examples/     plain-HTML and React reference pages
 
 ## Documentation
 
+**[himubey.is-a.dev/gov-ui](https://himubey.is-a.dev/gov-ui/)**
+
+Or build and read it locally:
+
 ```bash
 npm run build:docs
 open apps/docs/dist/index.html
